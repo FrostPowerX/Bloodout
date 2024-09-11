@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\Aula 1\Desktop\Bloodout\BloodOutProject\main.cpp(8,1): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  BloodOutProject.vcxproj -> C:\Users\Aula 1\Desktop\Bloodout\BloodOutProject\bin\Debug\BloodOutProject.exe
