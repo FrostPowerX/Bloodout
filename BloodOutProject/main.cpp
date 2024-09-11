@@ -9,7 +9,7 @@ void main()
 	int screenWidth = 800;
 	int screenHeight = 600;
 
-	slWindow(screenWidth, screenHeight, "Cacho", 0);
+	slWindow(screenWidth, screenHeight, "Cacho", 2);
 
 	while (!slShouldClose())
 	{

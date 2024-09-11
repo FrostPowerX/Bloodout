@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "C:\\Users\\Aula 1\\Desktop\\Bloodout\\BloodOutProject\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Aula 1\\Downloads\\WuPong-main\\WuPong\\src\\utilities\\Utils.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{ADC015FA-82C0-46BA-ACC2-671ADFB5F112}|BloodOutProject.vcxproj|C:\\Users\\Aula 1\\Desktop\\Bloodout\\BloodOutProject\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{ADC015FA-82C0-46BA-ACC2-671ADFB5F112}|BloodOutProject.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -19,12 +22,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Utils.cpp",
+              "DocumentMoniker": "C:\\Users\\Aula 1\\Downloads\\WuPong-main\\WuPong\\src\\utilities\\Utils.cpp",
+              "RelativeDocumentMoniker": "..\\..\\..\\Downloads\\WuPong-main\\WuPong\\src\\utilities\\Utils.cpp",
+              "ToolTip": "C:\\Users\\Aula 1\\Downloads\\WuPong-main\\WuPong\\src\\utilities\\Utils.cpp",
+              "RelativeToolTip": "..\\..\\..\\Downloads\\WuPong-main\\WuPong\\src\\utilities\\Utils.cpp",
+              "ViewState": "AQIAAGUBAAAAAAAAAAAAAHgBAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-11T13:37:09.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\Users\\Aula 1\\Desktop\\Bloodout\\BloodOutProject\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\Aula 1\\Desktop\\Bloodout\\BloodOutProject\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AQIAABIAAAAAAAAAAAAowCMAAAAMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-09-11T12:32:18.683Z",
               "EditorCaption": ""
