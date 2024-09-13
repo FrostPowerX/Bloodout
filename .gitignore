@@ -1,3 +1,4 @@
-[Oo]*bloodoutproject/bin/
-[Oo]*bloodoutproject/obj/
-[Oo]*BloodOutProject/.vs/
+*.vs
+
+BloodOutProject/bin
+BloodOutProject/obj
