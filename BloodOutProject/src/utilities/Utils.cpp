@@ -1,5 +1,10 @@
 #include "Utils.h"
 
+int GetRandomValue(int minValue, int maxValue)
+{
+	return minValue + (rand() % (maxValue - minValue + 1));
+}
+
 bool CheckCollision(Rectangle r1, Rectangle r2)
 {
 	float r1X2 = r1.x + r1.width;

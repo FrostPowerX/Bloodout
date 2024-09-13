@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "sl.h"
+#include "../utilities/Color.h"
 #include "..\utilities\Circle.h"
 
 struct Ball

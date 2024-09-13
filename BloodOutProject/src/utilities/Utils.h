@@ -19,6 +19,8 @@ enum TYPE_PENETRATION
 	NONE
 };
 
+int GetRandomValue(int minValue, int maxValue);
+
 bool CheckCollision(Rectangle, Rectangle);
 bool CheckCollision(Rectangle, Circle);
 

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "sl.h"
 
 void Input();
@@ -8,6 +10,8 @@ void main()
 {
 	int screenWidth = 800;
 	int screenHeight = 600;
+
+	float delta = 0;
 
 	slWindow(screenWidth, screenHeight, "Cacho", false);
 	slLoadFont("src/aerial.ttf");

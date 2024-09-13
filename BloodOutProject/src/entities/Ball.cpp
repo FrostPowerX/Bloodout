@@ -11,7 +11,7 @@ Ball CreateBall(Color color, float x, float y, float radius, float speed)
 
 	newBall.color = color;
 	newBall.speed = speed;
-
+	
 	newBall.dirX = (GetRandomValue(-100, 100) / 100.f);
 	newBall.dirY = (GetRandomValue(-100, 100) / 100.f);
 
@@ -58,8 +58,8 @@ void MoveBall(Ball& ball)
 	else if (ball.dirY < -1)
 		ball.dirY = -1;
 
-	ball.cir.x += ball.dirX * ball.speed * GetFrameTime();
-	ball.cir.y += ball.dirY * ball.speed * GetFrameTime();
+	ball.cir.x += ball.dirX * ball.speed * slGetDeltaTime();
+	ball.cir.y += ball.dirY * ball.speed * slGetDeltaTime();
 }
 
 void ChangeColorBall(Ball& circle, Color newColor)
@@ -79,12 +79,5 @@ void ChangeBallSpeed(Ball& ball, float speed)
 
 void DrawBall(Ball& ball)
 {
-	Vector3 pos;
-	pos.x = ball.cir.x - screenWidth / 2;
-	pos.y = 10;
-	pos.z = ball.cir.y - screenHeight / 2;
-
-	//DrawCircle(int(ball.cir.x), int(ball.cir.y), ball.cir.radius, ball.color);
-	DrawSphere(pos, ball.cir.radius, ball.color);
-	DrawSphereWires(pos, ball.cir.radius, 3, 2, ball.colorBorder);
+	slCircleFill(ball.cir.x, ball.cir.y, ball.cir.radius, 50);
 }

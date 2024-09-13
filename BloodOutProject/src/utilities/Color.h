@@ -10,7 +10,7 @@ struct Color
 	double g = 0;
 	double b = 0;
 
-	double h = 0;
+	double a = 0;
 };
 
 #endif // !COLOR
