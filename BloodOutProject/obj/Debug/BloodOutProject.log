@@ -1,3 +1,7 @@
-﻿  main.cpp
-C:\Users\Aula 1\Desktop\Bloodout\BloodOutProject\main.cpp(8,1): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
-  BloodOutProject.vcxproj -> C:\Users\Aula 1\Desktop\Bloodout\BloodOutProject\bin\Debug\BloodOutProject.exe
+﻿  Utils.cpp
+C:\Users\Aula 1\Desktop\Bloodout-master\Bloodout\BloodOutProject\src\utilities\Utils.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+  (compilando archivo de origen "src/utilities/Utils.cpp")
+  
+C:\Users\Aula 1\Desktop\Bloodout-master\Bloodout\BloodOutProject\src\utilities\Utils.cpp(361,23): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+  LINK : no se encontró C:\Users\Aula 1\Desktop\Bloodout-master\Bloodout\BloodOutProject\bin\Debug\BloodOutProject.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  BloodOutProject.vcxproj -> C:\Users\Aula 1\Desktop\Bloodout-master\Bloodout\BloodOutProject\bin\Debug\BloodOutProject.exe
