@@ -7,13 +7,13 @@ int GetRandomValue(int minValue, int maxValue)
 
 bool CheckCollision(Rectangle r1, Rectangle r2)
 {
-	float r1X2 = r1.x + r1.width;
+	float r1X2 = r1.x + (r1.width / 2);
 
-	float r1Y = r1.y + r1.height;
+	float r1Y = r1.y + (r1.height / 2);
 
-	float r2X2 = r2.x + r2.width;
+	float r2X2 = r2.x + (r2.width / 2);
 
-	float r2Y = r2.y + r2.height;
+	float r2Y = r2.y + (r2.height / 2);
 
 	return	(r1X2 >= r2.x &&
 		r2X2 >= r1.x &&
@@ -37,16 +37,16 @@ bool CheckCollision(Rectangle r, Circle c)
 	double pointY = c.y;
 
 	if (pointX < r.x)
-		pointX = r.x;
+		pointX = r.x - (r.width / 2);
 
-	if (pointX > r.x + r.width)
-		pointX = r.x + r.width;
+	if (pointX > r.x + (r.width / 2))
+		pointX = r.x + (r.width / 2);
 
 	if (pointY < r.y)
-		pointY = r.y;
+		pointY = r.y - (r.height / 2);
 
-	if (pointY > r.y + r.height)
-		pointY = r.y + r.height;
+	if (pointY > r.y + (r.height / 2))
+		pointY = r.y + (r.height / 2);
 
 	double refX = c.x - pointX;
 	double refY = c.y - pointY;
@@ -62,16 +62,16 @@ bool CheckCollision(Circle c, Rectangle r)
 	double pointY = c.y;
 
 	if (pointX < r.x)
-		pointX = r.x;
+		pointX = r.x - (r.width / 2);
 
 	if (pointX > r.x + r.width)
-		pointX = r.x + r.width;
+		pointX = r.x + (r.width / 2);
 
 	if (pointY < r.y)
-		pointY = r.y;
+		pointY = r.y - (r.height / 2);
 
 	if (pointY > r.y + r.height)
-		pointY = r.y + r.height;
+		pointY = r.y + (r.height / 2);
 
 	double refX = c.x - pointX;
 	double refY = c.y - pointY;
@@ -94,10 +94,10 @@ bool CheckBorderCollision(Circle c, float maxWidth, float minWidth, float maxHei
 
 bool CheckBorderCollision(Rectangle rect, float maxWidth, float minWidth, float maxHeight, float minHeight)
 {
-	if (rect.y >= maxHeight - rect.height || rect.y <= minHeight)
+	if (rect.y >= maxHeight - (rect.height / 2) || rect.y <= minHeight + (rect.height / 2))
 		return true;
 
-	if (rect.x >= maxWidth - rect.width || rect.x <= minWidth)
+	if (rect.x >= maxWidth - (rect.width / 2) || rect.x <= minWidth + (rect.width / 2))
 		return true;
 
 	return false;
@@ -118,8 +118,8 @@ TYPE_PENETRATION SolveCollision(Rectangle& entityA, Circle& entityB)
 	float heightBGB = entityB.radius;
 
 	Vector2 entityACenteredPos;
-	entityACenteredPos.x = entityA.x + entityA.width / 2;
-	entityACenteredPos.y = entityA.y + entityA.height / 2;
+	entityACenteredPos.x = entityA.x;
+	entityACenteredPos.y = entityA.y;
 
 	Vector2 entityBCenteredPos;
 	entityBCenteredPos.x = entityB.x;
@@ -308,8 +308,8 @@ TYPE_PENETRATION SolveCollisionMap(Rectangle& entity, float maxWidth, float minW
 	float halfWidth = (entity.width / 2);
 	float halfHeight = (entity.height / 2);
 
-	float entityCenteredPosX = entity.x + halfWidth;
-	float entityCenteredPosY = entity.y + halfHeight;
+	float entityCenteredPosX = entity.x;
+	float entityCenteredPosY = entity.y;
 
 	float minHorDistance = entityCenteredPosX - halfWidth - minWidth;
 	float maxHorDistance = entityCenteredPosX + halfWidth;
@@ -365,8 +365,8 @@ void BouncingAngle(Ball& ball, Rectangle& rect)
 {
 	float maxBounceAngle = 70.0f * (PI / 180.0f);
 
-	float intersectPointX = ball.cir.x - (rect.x + rect.width / 2);
-	float intersectPointY = ball.cir.y - (rect.y + rect.height / 2);
+	float intersectPointX = ball.cir.x - rect.x;
+	float intersectPointY = ball.cir.y - rect.y;
 
 	float relativePointX = intersectPointX / (rect.width / 2);
 	float relativePointY = intersectPointY / (rect.height / 2);

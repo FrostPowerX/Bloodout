@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\entities\Ball.cpp" />
+    <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utilities\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entities\Ball.h" />
+    <ClInclude Include="src\GameLoop.h" />
     <ClInclude Include="src\utilities\Circle.h" />
     <ClInclude Include="src\utilities\Color.h" />
     <ClInclude Include="src\utilities\Constants.h" />
