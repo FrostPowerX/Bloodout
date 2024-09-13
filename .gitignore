@@ -1,4 +1,4 @@
 *.vs
 
-BloodOutProject/bin
-BloodOutProject/obj
+*BloodOutProject/bin
+*BloodOutProject/obj
