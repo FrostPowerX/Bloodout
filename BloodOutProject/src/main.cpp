@@ -9,7 +9,9 @@ void main()
 	int screenWidth = 800;
 	int screenHeight = 600;
 
-	slWindow(screenWidth, screenHeight, "Cacho", 2);
+	slWindow(screenWidth, screenHeight, "Cacho", false);
+	slLoadFont("src/aerial.ttf");
+	slSetFont(0, 15);
 
 	while (!slShouldClose())
 	{
