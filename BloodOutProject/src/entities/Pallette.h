@@ -1,7 +1,10 @@
 #ifndef PALLETE
 #define PALLETE
 
-#include "raylib.h"
+#include "sl.h"
+#include "..\utilities\Color.h"
+#include "..\utilities\Rectangle.h"
+#include "..\utilities\Vector2.h"
 
 struct Pallette
 {
@@ -15,7 +18,7 @@ struct Pallette
 
 Pallette CreatePallette(Vector2, Color, float width, float height, float speed);
 
-void MovePallette(Pallette&, float);
+void MovePallette(Pallette&, float dirX, float dirY);
 
 void ChangeColorPallette(Pallette&, Color);
 

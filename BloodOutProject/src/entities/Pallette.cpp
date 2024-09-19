@@ -18,14 +18,21 @@ Pallette CreatePallette(Vector2 position, Color color, float width, float height
     return newPallette;
 }
 
-void MovePallette(Pallette& pallette, float dirX)
+void MovePallette(Pallette& pallette, float dirX, float dirY)
 {
     if (dirX > 1)
         dirX = 1;
     else if (dirX < -1)
         dirX = -1;
 
-    pallette.rect.y += dirX * pallette.speed * GetFrameTime();
+    if (dirY > 1)
+        dirY = 1;
+    else if (dirY < -1)
+        dirY = -1;
+
+    pallette.rect.x += dirX * pallette.speed * slGetDeltaTime();
+
+    pallette.rect.y += dirY * pallette.speed * slGetDeltaTime();
 }
 
 void ChangeColorPallette(Pallette& rect, Color newColor)
@@ -50,12 +57,6 @@ void ChangeSpeedPallette(Pallette& pallette, float speed)
 
 void DrawPallette(Pallette& pallette)
 {
-    Vector3 pos;
-    pos.x = pallette.rect.x + (pallette.rect.width / 2) - (screenWidth / 2);
-    pos.y = 10;
-    pos.z = pallette.rect.y + (pallette.rect.height / 2) - (screenHeight / 2);
-
-    DrawCube(pos, pallette.rect.width, 15, pallette.rect.height, pallette.color);
-    DrawCubeWires(pos, pallette.rect.width, 15, pallette.rect.height, pallette.borderColor);
-    //DrawRectangleRec(pallette.rect, pallette.color);
+    slSetForeColor(pallette.color.r, pallette.color.g, pallette.color.b, pallette.color.a);
+    slRectangleFill(pallette.rect.x, pallette.rect.y, pallette.rect.width, pallette.rect.height);
 }

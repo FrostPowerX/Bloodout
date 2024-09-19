@@ -36,13 +36,13 @@ bool CheckCollision(Rectangle r, Circle c)
 	double pointX = c.x;
 	double pointY = c.y;
 
-	if (pointX < r.x)
+	if (pointX < r.x - (r.width / 2))
 		pointX = r.x - (r.width / 2);
 
 	if (pointX > r.x + (r.width / 2))
 		pointX = r.x + (r.width / 2);
 
-	if (pointY < r.y)
+	if (pointY < r.y - (r.height / 2))
 		pointY = r.y - (r.height / 2);
 
 	if (pointY > r.y + (r.height / 2))
@@ -61,16 +61,16 @@ bool CheckCollision(Circle c, Rectangle r)
 	double pointX = c.x;
 	double pointY = c.y;
 
-	if (pointX < r.x)
+	if (pointX < r.x - (r.width / 2))
 		pointX = r.x - (r.width / 2);
 
-	if (pointX > r.x + r.width)
+	if (pointX > r.x + (r.width / 2))
 		pointX = r.x + (r.width / 2);
 
-	if (pointY < r.y)
+	if (pointY < r.y - (r.height / 2))
 		pointY = r.y - (r.height / 2);
 
-	if (pointY > r.y + r.height)
+	if (pointY > r.y + (r.height / 2))
 		pointY = r.y + (r.height / 2);
 
 	double refX = c.x - pointX;
@@ -83,10 +83,10 @@ bool CheckCollision(Circle c, Rectangle r)
 
 bool CheckBorderCollision(Circle c, float maxWidth, float minWidth, float maxHeight, float minHeight)
 {
-	if (c.y >= maxHeight - c.radius || c.y <= minHeight + c.radius)
+	if (c.y > maxHeight - c.radius || c.y < minHeight + c.radius)
 		return true;
 
-	if (c.x >= maxWidth - c.radius || c.x <= minWidth + c.radius)
+	if (c.x > maxWidth - c.radius || c.x < minWidth + c.radius)
 		return true;
 
 	return false;
@@ -94,10 +94,10 @@ bool CheckBorderCollision(Circle c, float maxWidth, float minWidth, float maxHei
 
 bool CheckBorderCollision(Rectangle rect, float maxWidth, float minWidth, float maxHeight, float minHeight)
 {
-	if (rect.y >= maxHeight - (rect.height / 2) || rect.y <= minHeight + (rect.height / 2))
+	if (rect.y > maxHeight - (rect.height / 2) || rect.y < minHeight + (rect.height / 2))
 		return true;
 
-	if (rect.x >= maxWidth - (rect.width / 2) || rect.x <= minWidth + (rect.width / 2))
+	if (rect.x > maxWidth - (rect.width / 2) || rect.x < minWidth + (rect.width / 2))
 		return true;
 
 	return false;
@@ -264,10 +264,10 @@ TYPE_PENETRATION SolveCollisionMap(Ball& entity, float maxWidth, float minWidth,
 	float maxVerDistance = entity.cir.y + entity.cir.radius;
 
 	bool downHorPenetration = maxHorDistance > maxWidth - entity.cir.radius;
-	bool upHorPenetration = minHorDistance < minWidth;
+	bool upHorPenetration = minHorDistance < 0;
 
-	bool downVerPenetration = maxVerDistance >= maxHeight - entity.cir.radius;
-	bool upVerPenetration = minVerDistance < minHeight;
+	bool downVerPenetration = maxVerDistance > maxHeight - entity.cir.radius;
+	bool upVerPenetration = minVerDistance < 0;
 
 	Vector2 separation;
 	separation.x = 0;
@@ -318,17 +318,17 @@ TYPE_PENETRATION SolveCollisionMap(Rectangle& entity, float maxWidth, float minW
 	float maxVerDistance = entityCenteredPosY + halfHeight;
 
 	bool downHorPenetration = maxHorDistance > maxWidth - halfWidth;
-	bool upHorPenetration = minHorDistance < minWidth;
+	bool upHorPenetration = minHorDistance < 0;
 
 	bool downVerPenetration = maxVerDistance > maxHeight - halfHeight;
-	bool upVerPenetration = minVerDistance < minHeight;
+	bool upVerPenetration = minVerDistance < 0;
 
 	Vector2 separation;
 	separation.x = 0;
 	separation.y = 0;
 
 	if (downHorPenetration)
-		separation.x = maxHorDistance - minWidth;
+		separation.x = maxHorDistance - maxWidth;
 	else if (upHorPenetration)
 		separation.x = minHorDistance;
 
@@ -373,15 +373,15 @@ void BouncingAngle(Ball& ball, Rectangle& rect)
 
 	float bounceAngle = relativePointY * maxBounceAngle;
 
-	if (fabs(intersectPointY) > 1.f)
+	if (fabs(intersectPointX) > 1.f)
 	{
-		ball.dirX = relativePointX * cos(bounceAngle);
+		ball.dirX = relativePointY * cos(bounceAngle);
 		ball.dirY = sin(bounceAngle);
 	}
 	else
 	{
-		ball.dirX = (ball.dirX > 0) ? 1.0f : -1.0f;
-		ball.dirY = 0;
+		ball.dirX = 0;
+		ball.dirY = (ball.dirY > 0) ? 1.0f : -1.0f;
 	}
 
 	NormalizeVector(ball.dirX, ball.dirY);
