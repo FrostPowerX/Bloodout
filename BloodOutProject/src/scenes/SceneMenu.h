@@ -1,7 +1,7 @@
 #ifndef MENU_SCENE
 #define MENU_SCENE
 
-namespace pong
+namespace game
 {
 	namespace menu
 	{

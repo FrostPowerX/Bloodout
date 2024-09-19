@@ -1,7 +1,7 @@
 #ifndef SCENE_CONTROLS
 #define SCENE_CONTROLS
 
-namespace pong
+namespace game
 {
 	namespace controls
 	{

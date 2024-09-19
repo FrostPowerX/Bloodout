@@ -23,15 +23,29 @@
     <ClCompile Include="src\entities\Pallette.cpp" />
     <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\scenes\SceneControls.cpp" />
+    <ClCompile Include="src\scenes\SceneCredits.cpp" />
+    <ClCompile Include="src\scenes\SceneMenu.cpp" />
+    <ClCompile Include="src\ui\Button.cpp" />
+    <ClCompile Include="src\ui\Panel.cpp" />
+    <ClCompile Include="src\ui\Text.cpp" />
+    <ClCompile Include="src\utilities\Input.cpp" />
     <ClCompile Include="src\utilities\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entities\Ball.h" />
     <ClInclude Include="src\entities\Pallette.h" />
     <ClInclude Include="src\GameLoop.h" />
+    <ClInclude Include="src\scenes\SceneControls.h" />
+    <ClInclude Include="src\scenes\SceneCredits.h" />
+    <ClInclude Include="src\scenes\SceneMenu.h" />
+    <ClInclude Include="src\ui\Button.h" />
+    <ClInclude Include="src\ui\Panel.h" />
+    <ClInclude Include="src\ui\Text.h" />
     <ClInclude Include="src\utilities\Circle.h" />
     <ClInclude Include="src\utilities\Color.h" />
     <ClInclude Include="src\utilities\Constants.h" />
+    <ClInclude Include="src\utilities\Input.h" />
     <ClInclude Include="src\utilities\Rectangle.h" />
     <ClInclude Include="src\utilities\Utils.h" />
     <ClInclude Include="src\utilities\Vector2.h" />

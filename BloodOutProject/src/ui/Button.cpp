@@ -48,27 +48,29 @@ Vector2 GetCenterPositionButton(Button button)
 {
 	Vector2 centerPosition;
 
-	centerPosition.x = button.rect.x + (button.rect.width / 2);
-	centerPosition.y = button.rect.y + (button.rect.height / 2);
+	centerPosition.x = button.rect.x;
+	centerPosition.y = button.rect.y;
 
 	return centerPosition;
 }
 
 void SetButtonPosition(Button& button, Vector2 newPosition)
 {
-	button.rect.x = newPosition.x - (button.rect.width / 2);
-	button.rect.y = newPosition.y - (button.rect.height / 2);
+	button.rect.x = newPosition.x;
+	button.rect.y = newPosition.y;
 }
 
 bool MouseOnTopButton(Button& button)
 {
-	Vector2 mousePosition = GetMousePosition();
+	Vector2 mousePosition;
+	mousePosition.x = slGetMouseX();
+	mousePosition.y = slGetMouseY();
 
-	int minValueX = button.rect.x;
-	int minValueY = button.rect.y;
+	int minValueX = button.rect.x - (button.rect.width /2);
+	int minValueY = button.rect.y - (button.rect.height / 2);
 
-	int maxValueX = button.rect.x + button.rect.width;
-	int maxValueY = button.rect.y + button.rect.height;
+	int maxValueX = button.rect.x + (button.rect.width / 2);
+	int maxValueY = button.rect.y + (button.rect.height / 2);
 
 	bool onTopX = (mousePosition.x >= minValueX && mousePosition.x <= maxValueX);
 	bool onTopY = (mousePosition.y >= minValueY && mousePosition.y <= maxValueY);
@@ -90,11 +92,11 @@ bool IsButtonPressed(Button& button)
 {
 	bool isReleassed = false;
 
-	if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT))
+	if (GetMouseButtonUp(SL_MOUSE_BUTTON_LEFT))
 		if (button.isMouseOnTop)
 			isReleassed = true;
 
-	if (IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT))
+	if (GetMouseButtonPress(SL_MOUSE_BUTTON_LEFT))
 	{
 		if (button.isMouseOnTop)
 			button.isPressed = true;
@@ -109,8 +111,8 @@ bool IsButtonPressed(Button& button)
 
 void SetText(Button& button, std::string text)
 {
-	button.textPosition.x = button.rect.x + (button.rect.width / 2) - (MeasureText(button.text.c_str(), button.fontSize) / 2);
-	button.textPosition.y = button.rect.y + (button.rect.height / 2) - (button.fontSize / 2);
+	button.textPosition.x = button.rect.x - (slGetTextWidth(button.text.c_str()) / 2);
+	button.textPosition.y = button.rect.y - (button.fontSize / 2);
 }
 
 void DrawButton(Button button)
@@ -128,7 +130,9 @@ void DrawButton(Button button)
 	else
 		usedColor = button.normalColor;
 
-	DrawRectangleRec(button.rect, usedColor);
+	slSetForeColor(usedColor.r, usedColor.g, usedColor.b, usedColor.a);
+	slRectangleFill(button.rect.x, button.rect.y, button.rect.width, button.rect.height);
 
-	DrawText(button.text.c_str(), button.textPosition.x, button.textPosition.y, button.fontSize, button.textColor);
+	slSetForeColor(button.textColor.r, button.textColor.g, button.textColor.b, button.textColor.a);
+	slText(button.textPosition.x, button.textPosition.y, button.text.c_str());
 }

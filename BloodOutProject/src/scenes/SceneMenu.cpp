@@ -6,15 +6,17 @@
 #include "..\ui\Button.h"
 #include "..\ui\Panel.h"
 
-#include "..\PongGame.h"
+#include "..\GameLoop.h"
 
-namespace pong
+namespace game
 {
 	namespace menu
 	{
+		using namespace gameLoop;
+
 		enum class OPTIONS_MENU
 		{
-			SINGLEPLAYER,
+			PLAY,
 			MULTIPLAYER,
 			CONTROLS,
 			CREDITS,
@@ -34,38 +36,37 @@ namespace pong
 
 			Vector2 buttonPos;
 
-			buttonPos.x = (screenWidth / 2) - (buttonWidth / 2);
-			buttonPos.y = screenHeight / (ButtonsInMenu - 2);
+			buttonPos.x = (screenWidth / 2);
+			buttonPos.y = screenHeight - buttonsOffset;
 
 			std::string namesButtons[ButtonsInMenu];
 
-			namesButtons[0] = "Singleplayer";
-			namesButtons[1] = "Multiplayer";
-			namesButtons[2] = "Controls";
-			namesButtons[3] = "Credits";
-			namesButtons[4] = "Exit";
+			namesButtons[0] = "Play";
+			namesButtons[1] = "Controls";
+			namesButtons[2] = "Credits";
+			namesButtons[3] = "Exit";
 
 			Rectangle rect;
 
 			rect.x = (screenWidth / 2);
 			rect.y = (screenHeight / 4);
 
-			gameNamePanel = CreatePanel(rect, GameName, 10, 10, 10, 10, 90, DarkBrownWu, OpaYellowWu);
+			gameNamePanel = CreatePanel(rect, GameName, 10, 10, 10, 10, 90, WHITE, YELLOW);
 
 			for (int i = 0; i < ButtonsInMenu; i++)
 			{
 				Vector2 tempPos;
 				tempPos = buttonPos;
 
-				tempPos.y += (i * buttonHeight) + (buttonsOffset * (i + 1));
+				tempPos.y -= (i * buttonHeight) + (buttonsOffset * (i + 1));
 
-				buttons[i] = CreateButton(tempPos, buttonWidth, buttonHeight, namesButtons[i], 20, GreenWu, RedWu, DarkRedWu, OpaYellowWu);
+				buttons[i] = CreateButton(tempPos, buttonWidth, buttonHeight, namesButtons[i], 20, GREEN, RED, BLUE, YELLOW);
 			}
 		}
 
 		void Input()
 		{
-			if (IsKeyPressed(KEY_ESCAPE))
+			if (slGetKey(SL_KEY_ESCAPE))
 				programLoop = false;
 		}
 
@@ -79,14 +80,8 @@ namespace pong
 					{
 						switch (OPTIONS_MENU(i))
 						{
-						case OPTIONS_MENU::SINGLEPLAYER:
-							currentScene = SCENE::GAMEPLAY;
-							mutliplayer = false;
-							break;
-
-						case OPTIONS_MENU::MULTIPLAYER:
-							currentScene = SCENE::GAMEPLAY;
-							mutliplayer = true;
+						case OPTIONS_MENU::PLAY:
+							//currentScene = SCENE::GAMEPLAY;
 							break;
 
 						case OPTIONS_MENU::CONTROLS:

@@ -1,9 +1,9 @@
 #ifndef SCENE_CREDITS
 #define SCENE_CREDITS
 
-#include "raylib.h"
+#include "sl.h"
 
-namespace pong
+namespace game
 {
 	namespace credits
 	{

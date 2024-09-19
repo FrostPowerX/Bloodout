@@ -18,11 +18,8 @@ Panel CreatePanel(Rectangle rect, string text, float minOffSetX, float maxOffSet
     newP.rectColor = rectColor;
     newP.textColor = textColor;
 
-    newP.rect.width = newP.minOffSetX + newP.maxOffSetX + MeasureText(newP.text.c_str(), newP.fontSizeText);
+    newP.rect.width = newP.minOffSetX + newP.maxOffSetX + slGetTextWidth(newP.text.c_str());
     newP.rect.height = newP.minOffSetY + newP.maxOffSetY + newP.fontSizeText;
-    
-    newP.rect.x = newP.rect.x - (newP.rect.width / 2);
-    newP.rect.y = newP.rect.y - (newP.rect.height / 2);
     
     newP.textPosition.x = newP.rect.x + newP.minOffSetX;
     newP.textPosition.y = newP.rect.y + newP.minOffSetY;
@@ -35,8 +32,8 @@ void SetPanelPosition(Panel& panel, Vector2 newPos)
     panel.rect.x = newPos.x;
     panel.rect.y = newPos.y;
 
-    panel.rect.x = panel.rect.x - (panel.rect.width / 2);
-    panel.rect.y = panel.rect.y - (panel.rect.height / 2);
+    panel.rect.x = panel.rect.x;
+    panel.rect.y = panel.rect.y;
 
     SetText(panel, panel.text);
 }
@@ -45,7 +42,7 @@ void SetText(Panel& panel, string text)
 {
     panel.text = text;
 
-    panel.rect.width = panel.minOffSetX + panel.maxOffSetX + MeasureText(panel.text.c_str(), panel.fontSizeText);
+    panel.rect.width = panel.minOffSetX + panel.maxOffSetX + slGetTextWidth(panel.text.c_str());
     panel.rect.height = panel.minOffSetY + panel.maxOffSetY + panel.fontSizeText;
 
     panel.textPosition.x = panel.rect.x + panel.minOffSetX;
@@ -64,7 +61,9 @@ void SetBackGroundColor(Panel& panel, Color color)
 
 void DrawPanel(Panel panel)
 {
-    DrawRectangleRec(panel.rect, panel.rectColor);
+    slSetForeColor(panel.rectColor.r, panel.rectColor.g, panel.rectColor.b, panel.rectColor.a);
+    slRectangleFill(panel.rect.x, panel.rect.y, panel.rect.width, panel.rect.height);
 
-    DrawText(panel.text.c_str(), panel.textPosition.x, panel.textPosition.y, panel.fontSizeText, panel.textColor);
+    slSetForeColor(panel.textColor.r, panel.textColor.g, panel.textColor.b, panel.textColor.a);
+    slText(panel.textPosition.x, panel.textPosition.y, panel.text.c_str());
 }

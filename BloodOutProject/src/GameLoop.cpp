@@ -6,86 +6,128 @@
 #include "entities/Ball.h"
 #include "entities/Pallette.h"
 
+#include "scenes/SceneMenu.h"
+//#include "scenes/SceneGamePlay.h"
+#include "scenes/SceneControls.h"
+#include "scenes/SceneCredits.h"
+
 #include "utilities/Constants.h"
 #include "utilities/Color.h"
 #include "utilities/Utils.h"
+#include "utilities/Input.h"
 
-namespace gameLoop
+namespace game
 {
-	Ball ball;
-	Pallette player;
-
-	void Initialize();
-
-	void Input();
-	void Update();
-	void Draw();
-
-	void Play()
+	namespace gameLoop
 	{
-		slWindow(screenWidth, screenHeight, "Cacho", false);
-		slLoadFont("src/aerial.ttf");
-		slSetFont(0, 15);
+		SCENE currentScene = SCENE::MENU;
 
-		Initialize();
+		bool programLoop = true;
 
-		while (!slShouldClose())
+		void Initialize();
+
+		void Input();
+		void Update();
+		void Draw();
+
+		void Play()
 		{
-			Input();
-			Update();
-			Draw();
+			slWindow(screenWidth, screenHeight, "Cacho", false);
+			slLoadFont("src/aerial.ttf");
+			slSetFont(0, 15);
+
+			Initialize();
+
+			while (!slShouldClose() && programLoop)
+			{
+				Input();
+				Update();
+				Draw();
+			}
+
+			slClose();
 		}
 
-		slClose();
-	}
-
-	void Initialize()
-	{
-		ball = CreateBall(WHITE, 50, 50, 10, 500);
-
-		player = CreatePallette(Vector2{ screenWidth / 2, 5 + 15 }, WHITE, 60.f, 15.f, 300.f);
-	}
-
-	void Input()
-	{
-		if (slGetKey('A'))
-			MovePallette(player, -1, 0);
-		else if (slGetKey('D'))
-			MovePallette(player, 1, 0);
-
-	}
-
-	void Update()
-	{
-		MoveBall(ball);
-
-		if (CheckBorderCollision(player.rect, screenWidth, 250, screenHeight, 0))
-			SolveCollisionMap(player.rect, screenWidth, 250, screenHeight, 0);
-
-		if (CheckBorderCollision(ball.cir, screenWidth, 250, screenHeight, 0))
-			SolveCollisionMap(ball, screenWidth, 250, screenHeight, 0);
-
-		if (CheckCollision(player.rect, ball.cir))
+		void Initialize()
 		{
-			switch (SolveCollision(player.rect, ball.cir))
+			menu::Init();
+			controls::Init();
+			credits::Init();
+		}
+
+		void Input()
+		{
+			switch (currentScene)
 			{
-			case HORIZONTAL:
-				ball.dirX *= -1;
+			case game::gameLoop::SCENE::MENU:
+				menu::Input();
 				break;
 
-			case VERTICAL:
-				ball.dirY *= -1;
+			case game::gameLoop::SCENE::CONTROLS:
+				controls::Input();
+				break;
+
+			case game::gameLoop::SCENE::GAMEPLAY:
+				//gameplay::Input();
+				break;
+
+			case game::gameLoop::SCENE::CREDITS:
+				credits::Input();
+				break;
+
+			default:
 				break;
 			}
 		}
-	}
 
-	void Draw()
-	{
-		DrawBall(ball);
+		void Update()
+		{
+			switch (currentScene)
+			{
+			case game::gameLoop::SCENE::MENU:
+				menu::Update();
+				break;
 
-		DrawPallette(player);
+			case game::gameLoop::SCENE::CONTROLS:
+				controls::Update();
+				break;
 
-		slRender();
+			case game::gameLoop::SCENE::GAMEPLAY:
+				break;
+
+			case game::gameLoop::SCENE::CREDITS:
+				credits::Update();
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		void Draw()
+		{
+			switch (currentScene)
+			{
+			case game::gameLoop::SCENE::MENU:
+				menu::Draw();
+				break;
+
+			case game::gameLoop::SCENE::CONTROLS:
+				controls::Draw();
+				break;
+
+			case game::gameLoop::SCENE::GAMEPLAY:
+				break;
+
+			case game::gameLoop::SCENE::CREDITS:
+				credits::Draw();
+				break;
+
+			default:
+				break;
+			}
+
+			slRender();
+		}
 	}
 }

@@ -2,7 +2,10 @@
 #define TEXT
 
 #include <iostream>
-#include "raylib.h"
+
+#include "sl.h"
+#include "..\utilities\Vector2.h"
+#include "..\utilities\Color.h"
 
 struct Text
 {

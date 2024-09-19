@@ -3,7 +3,11 @@
 
 #include <string>
 
-#include "raylib.h"
+#include "sl.h"
+#include "..\utilities\Rectangle.h"
+#include "..\utilities\Vector2.h"
+#include "..\utilities\Color.h"
+#include "..\utilities\Input.h"
 
 struct Button
 {

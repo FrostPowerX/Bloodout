@@ -1,7 +1,7 @@
 #ifndef GAME_PLAY_SCENE
 #define GAME_PLAY_SCENE
 
-#include "raylib.h"
+#include "sl.h"
 
 namespace pong
 {

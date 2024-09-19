@@ -1,6 +1,21 @@
 #pragma once
 
-namespace gameLoop
+namespace game
 {
-	void Play();
+	namespace gameLoop
+	{
+		enum class SCENE
+		{
+			MENU,
+			CONTROLS,
+			GAMEPLAY,
+			CREDITS
+		};
+
+		extern SCENE currentScene;
+
+		extern bool programLoop;
+
+		void Play();
+	}
 }

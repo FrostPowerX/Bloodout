@@ -21,7 +21,7 @@ const int PalletSpeed = 250;
 
 const int PalletsOffset = 10;
 
-const int ButtonsInMenu = 5;
+const int ButtonsInMenu = 4;
 const int ButtonsInGamePlay = 3;
 
 const int TextsInGamePlay = 6;
