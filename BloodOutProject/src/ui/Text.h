@@ -12,7 +12,7 @@ struct Text
 	Vector2 position;
 	std::string text;
 
-	int font;
+	int font = 0;
 
 	Color color;
 };

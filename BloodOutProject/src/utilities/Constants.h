@@ -7,6 +7,8 @@
 
 #include "sl.h"
 
+const std::string resourcesDir = "res/";
+
 const std::string GameName = "BloodOut";
 
 const int screenWidth = 800;

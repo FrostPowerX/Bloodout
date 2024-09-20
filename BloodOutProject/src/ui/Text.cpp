@@ -6,8 +6,8 @@ Text CreateText(std::string text, int x, int y, int font, Color color)
 
     newText.text = text;
 
-    newText.position.x = x;
-    newText.position.y = y;
+    newText.position.x = (float)x;
+    newText.position.y = (float)y;
 
     newText.font = font;
 
@@ -19,5 +19,6 @@ Text CreateText(std::string text, int x, int y, int font, Color color)
 void DrawText(Text text)
 {
     slSetForeColor(text.color.r, text.color.g, text.color.b, text.color.a);
+    slSetFontSize(text.font);
     slText(text.position.x, text.position.y, text.text.c_str());
 }

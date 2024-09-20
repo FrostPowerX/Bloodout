@@ -2,6 +2,7 @@
 
 #include "..\utilities\Constants.h"
 #include "..\utilities\Utils.h"
+#include "..\utilities\Input.h"
 
 #include "..\ui\Button.h"
 #include "..\ui\Panel.h"
@@ -17,7 +18,6 @@ namespace game
 		enum class OPTIONS_MENU
 		{
 			PLAY,
-			MULTIPLAYER,
 			CONTROLS,
 			CREDITS,
 			EXIT
@@ -66,8 +66,11 @@ namespace game
 
 		void Input()
 		{
-			if (slGetKey(SL_KEY_ESCAPE))
-				programLoop = false;
+			if (GetKeyDown(SL_KEY_ESCAPE))
+			{
+				cout << "Se presiono\n";
+				//programLoop = false;
+			}
 		}
 
 		void Update()
@@ -81,7 +84,7 @@ namespace game
 						switch (OPTIONS_MENU(i))
 						{
 						case OPTIONS_MENU::PLAY:
-							//currentScene = SCENE::GAMEPLAY;
+							currentScene = SCENE::GAMEPLAY;
 							break;
 
 						case OPTIONS_MENU::CONTROLS:

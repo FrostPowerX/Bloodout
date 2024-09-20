@@ -63,29 +63,33 @@ void SetButtonPosition(Button& button, Vector2 newPosition)
 bool MouseOnTopButton(Button& button)
 {
 	Vector2 mousePosition;
-	mousePosition.x = slGetMouseX();
-	mousePosition.y = slGetMouseY();
+	mousePosition.x = (float)slGetMouseX();
+	mousePosition.y = (float)slGetMouseY();
 
-	int minValueX = button.rect.x - (button.rect.width /2);
-	int minValueY = button.rect.y - (button.rect.height / 2);
+	float minValueX = button.rect.x - (button.rect.width /2);
+	float minValueY = button.rect.y - (button.rect.height / 2);
 
-	int maxValueX = button.rect.x + (button.rect.width / 2);
-	int maxValueY = button.rect.y + (button.rect.height / 2);
+	float maxValueX = button.rect.x + (button.rect.width / 2);
+	float maxValueY = button.rect.y + (button.rect.height / 2);
 
 	bool onTopX = (mousePosition.x >= minValueX && mousePosition.x <= maxValueX);
 	bool onTopY = (mousePosition.y >= minValueY && mousePosition.y <= maxValueY);
 
+	bool onTop = false;
+
 	if (onTopX && onTopY)
 	{
 		button.isMouseOnTop = true;
+		onTop = true;
 	}
 	else
 	{
 		button.isMouseOnTop = false;
+		onTop = false;
 	}
 
 
-	return true;
+	return onTop;
 }
 
 bool IsButtonPressed(Button& button)
@@ -111,7 +115,9 @@ bool IsButtonPressed(Button& button)
 
 void SetText(Button& button, std::string text)
 {
-	button.textPosition.x = button.rect.x - (slGetTextWidth(button.text.c_str()) / 2);
+	slSetFontSize(button.fontSize);
+
+	button.textPosition.x = button.rect.x - ((float)slGetTextWidth(button.text.c_str()) / 2);
 	button.textPosition.y = button.rect.y - (button.fontSize / 2);
 }
 
@@ -134,5 +140,6 @@ void DrawButton(Button button)
 	slRectangleFill(button.rect.x, button.rect.y, button.rect.width, button.rect.height);
 
 	slSetForeColor(button.textColor.r, button.textColor.g, button.textColor.b, button.textColor.a);
+	slSetFontSize(button.fontSize);
 	slText(button.textPosition.x, button.textPosition.y, button.text.c_str());
 }

@@ -1,37 +1,151 @@
 #include "Input.h"
 
-bool MouseKeyPress = false;
+#include <iostream>
+#include <vector>
 
-enum class TYPE_MOUSE_PRESS
+using namespace std;
+
+struct Key
+{
+	int id;
+
+	bool isPressed;
+	bool wasPressed;
+};
+
+vector<Key> keys;
+
+enum class TYPE_KEY
 {
 	PRESS,
-	BUP,
-	BDOWN,
+	RELEASE,
+	DOWN,
 	NONE
 };
 
-TYPE_MOUSE_PRESS MouseEvent(int key, TYPE_MOUSE_PRESS typeOfGet);
+TYPE_KEY MouseEvent(int key, TYPE_KEY typeOfGet);
+TYPE_KEY KeyEvent(int key, TYPE_KEY typeOfGet);
 
-TYPE_MOUSE_PRESS MouseEvent(int key, TYPE_MOUSE_PRESS typeOfGet)
+
+TYPE_KEY MouseEvent(int key, TYPE_KEY typeOfGet)
 {
-	TYPE_MOUSE_PRESS type = TYPE_MOUSE_PRESS::NONE;
+	TYPE_KEY type = TYPE_KEY::NONE;
 
-	if (slGetMouseButton(key))
+	if (keys.size() <= 0)
 	{
-		if (!MouseKeyPress && typeOfGet == TYPE_MOUSE_PRESS::BDOWN)
-		{
-			type = TYPE_MOUSE_PRESS::BDOWN;
-			MouseKeyPress = true;
-		}
-		else if (typeOfGet == TYPE_MOUSE_PRESS::PRESS)
-		{
-			type = TYPE_MOUSE_PRESS::PRESS;
-		}
+		Key newKey;
+
+		newKey.id = key;
+		newKey.isPressed = false;
+		newKey.wasPressed = false;
+
+		keys.push_back(newKey);
 	}
-	else if (MouseKeyPress && typeOfGet == TYPE_MOUSE_PRESS::BUP)
+
+	for (int i = 0; i < keys.size(); i++)
 	{
-		type = TYPE_MOUSE_PRESS::BUP;
-		MouseKeyPress = false;
+		if (keys[i].id == key)
+		{
+			if (slGetMouseButton(key))
+			{
+				keys[i].isPressed = true;
+			}
+			else
+			{
+				keys[i].isPressed = false;
+			}
+
+			if (keys[i].isPressed && !keys[i].wasPressed)
+			{
+				keys[i].wasPressed = true;
+
+				type = TYPE_KEY::DOWN;
+			}
+			else if (keys[i].isPressed && keys[i].wasPressed)
+			{
+				type = TYPE_KEY::PRESS;
+			}
+			else if (!keys[i].isPressed && keys[i].wasPressed)
+			{
+				type = TYPE_KEY::RELEASE;
+
+				keys[i].wasPressed = false;
+			}
+		}
+		else
+		{
+			Key newKey;
+
+			newKey.id = key;
+			newKey.isPressed = false;
+			newKey.wasPressed = false;
+
+			keys.push_back(newKey);
+		}
+
+		return type;
+	}
+
+	return type;
+}
+
+TYPE_KEY KeyEvent(int key, TYPE_KEY typeOfGet)
+{
+	TYPE_KEY type = TYPE_KEY::NONE;
+
+	if (keys.size() <= 0)
+	{
+		Key newKey;
+
+		newKey.id = key;
+		newKey.isPressed = false;
+		newKey.wasPressed = false;
+
+		keys.push_back(newKey);
+	}
+
+	for (int i = 0; i < keys.size(); i++)
+	{
+		if (keys[i].id == key)
+		{
+			if (slGetKey(key))
+			{
+				keys[i].isPressed = true;
+			}
+			else
+			{
+				keys[i].isPressed = false;
+			}
+
+			if (keys[i].isPressed && !keys[i].wasPressed)
+			{
+				keys[i].wasPressed = true;
+
+				type = TYPE_KEY::DOWN;
+			}
+			else if (keys[i].isPressed && keys[i].wasPressed)
+			{
+				type = TYPE_KEY::PRESS;
+			}
+			else if (!keys[i].isPressed && keys[i].wasPressed)
+			{
+				type = TYPE_KEY::RELEASE;
+
+				keys[i].wasPressed = false;
+			}
+		}
+		else
+		{
+			Key newKey;
+
+			newKey.id = key;
+			newKey.isPressed = false;
+			newKey.wasPressed = false;
+
+			keys.push_back(newKey);
+		}
+
+		return type;
 	}
 
 	return type;
@@ -39,34 +153,44 @@ TYPE_MOUSE_PRESS MouseEvent(int key, TYPE_MOUSE_PRESS typeOfGet)
 
 bool GetMouseButtonPress(int key)
 {
-	TYPE_MOUSE_PRESS thisType = TYPE_MOUSE_PRESS::PRESS;
-	TYPE_MOUSE_PRESS type = TYPE_MOUSE_PRESS::NONE;
+	TYPE_KEY thisType = TYPE_KEY::PRESS;
 
-
-	if (slGetMouseButton(key))
-		type = MouseEvent(key, thisType);
-
-	return (type == thisType);
+	return (MouseEvent(key, thisType) == thisType);
 }
 
 bool GetMouseButtonDown(int key)
 {
-	TYPE_MOUSE_PRESS thisType = TYPE_MOUSE_PRESS::BDOWN;
-	TYPE_MOUSE_PRESS type = TYPE_MOUSE_PRESS::NONE;
+	TYPE_KEY thisType = TYPE_KEY::DOWN;
 
-	if (slGetMouseButton(key))
-		type = MouseEvent(key, thisType);
-
-	return (type == thisType);
+	return (MouseEvent(key, thisType) == thisType);
 }
 
 bool GetMouseButtonUp(int key)
 {
-	TYPE_MOUSE_PRESS thisType = TYPE_MOUSE_PRESS::BUP;
-	TYPE_MOUSE_PRESS type = TYPE_MOUSE_PRESS::NONE;
+	TYPE_KEY thisType = TYPE_KEY::RELEASE;
 
-	if (slGetMouseButton(key))
-		type = MouseEvent(key, thisType);
+	return (MouseEvent(key, thisType) == thisType);
+}
 
-	return (type == thisType);
+
+
+bool GetKeyPress(int key)
+{
+	TYPE_KEY thisType = TYPE_KEY::PRESS;
+
+	return (KeyEvent(key, thisType) == thisType);
+}
+
+bool GetKeyDown(int key)
+{
+	TYPE_KEY thisType = TYPE_KEY::DOWN;
+
+	return (KeyEvent(key, thisType) == thisType);
+}
+
+bool GetKeyUp(int key)
+{
+	TYPE_KEY thisType = TYPE_KEY::RELEASE;
+
+	return (KeyEvent(key, thisType) == thisType);
 }
