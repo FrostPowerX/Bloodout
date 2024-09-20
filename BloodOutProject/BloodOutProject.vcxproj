@@ -25,10 +25,12 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scenes\SceneControls.cpp" />
     <ClCompile Include="src\scenes\SceneCredits.cpp" />
+    <ClCompile Include="src\scenes\SceneGamePlay.cpp" />
     <ClCompile Include="src\scenes\SceneMenu.cpp" />
     <ClCompile Include="src\ui\Button.cpp" />
     <ClCompile Include="src\ui\Panel.cpp" />
     <ClCompile Include="src\ui\Text.cpp" />
+    <ClCompile Include="src\utilities\Color.cpp" />
     <ClCompile Include="src\utilities\Input.cpp" />
     <ClCompile Include="src\utilities\Utils.cpp" />
   </ItemGroup>
@@ -38,6 +40,7 @@
     <ClInclude Include="src\GameLoop.h" />
     <ClInclude Include="src\scenes\SceneControls.h" />
     <ClInclude Include="src\scenes\SceneCredits.h" />
+    <ClInclude Include="src\scenes\SceneGamePlay.h" />
     <ClInclude Include="src\scenes\SceneMenu.h" />
     <ClInclude Include="src\ui\Button.h" />
     <ClInclude Include="src\ui\Panel.h" />

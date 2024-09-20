@@ -19,4 +19,7 @@ const Color YELLOW = Color{ 0,0.5,0.5,1 };
 const Color GRAY = Color{ 0.5,0.5,0.5,1 };
 const Color GRAY_TRANSPARENT = Color{ 0.5,0.5,0.5,0.4 };
 
+void SetBackColor(Color color);
+void SetForeColor(Color color);
+
 #endif // !COLOR

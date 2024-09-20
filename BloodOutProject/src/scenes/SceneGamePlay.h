@@ -3,7 +3,7 @@
 
 #include "sl.h"
 
-namespace pong
+namespace game
 {
 	namespace gameplay
 	{
@@ -33,12 +33,10 @@ namespace pong
 
 		void RestartRound();
 		void RestartGame();
-
+		
 		void AddBalls(int cant);
 		void RemoveBalls(int cant);
 		void AddPower();
-
-		void SetGameModeMultiplayer(bool);
 	}
 }
 

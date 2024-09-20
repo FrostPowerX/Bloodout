@@ -1,7 +1,11 @@
 #include "SceneControls.h"
 
 #include "..\utilities\Constants.h"
+#include "..\utilities\Input.h"
+
 #include "..\ui\Panel.h"
+
+#include "..\GameLoop.h"
 
 namespace game
 {
@@ -31,10 +35,10 @@ namespace game
 
 		void Input()
 		{
-			if (slGetKey(SL_KEY_ESCAPE))
+			if (GetKeyDown(SL_KEY_ESCAPE))
 			{
 				Init();
-				//currentScene = SCENE::MENU;
+				gameLoop::currentScene = gameLoop::SCENE::MENU;
 			}
 		}
 

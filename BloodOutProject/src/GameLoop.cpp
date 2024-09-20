@@ -7,7 +7,7 @@
 #include "entities/Pallette.h"
 
 #include "scenes/SceneMenu.h"
-//#include "scenes/SceneGamePlay.h"
+#include "scenes/SceneGamePlay.h"
 #include "scenes/SceneControls.h"
 #include "scenes/SceneCredits.h"
 
@@ -52,6 +52,7 @@ namespace game
 		{
 			menu::Init();
 			controls::Init();
+			gameplay::Init();
 			credits::Init();
 		}
 
@@ -68,7 +69,7 @@ namespace game
 				break;
 
 			case game::gameLoop::SCENE::GAMEPLAY:
-				//gameplay::Input();
+				gameplay::Input();
 				break;
 
 			case game::gameLoop::SCENE::CREDITS:
@@ -93,6 +94,7 @@ namespace game
 				break;
 
 			case game::gameLoop::SCENE::GAMEPLAY:
+				gameplay::Update();
 				break;
 
 			case game::gameLoop::SCENE::CREDITS:
@@ -117,6 +119,7 @@ namespace game
 				break;
 
 			case game::gameLoop::SCENE::GAMEPLAY:
+				gameplay::Draw();
 				break;
 
 			case game::gameLoop::SCENE::CREDITS:

@@ -1,7 +1,7 @@
 #ifndef POWER_UP
 #define POWER_UP
 
-#include "raylib.h"
+#include "sl.h"
 
 struct PowerUp
 {
