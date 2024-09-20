@@ -8,6 +8,7 @@
 #include "sl.h"
 
 const std::string resourcesDir = "res/";
+const std::string fontDir = resourcesDir + "fonts/";
 
 const std::string GameName = "BloodOut";
 

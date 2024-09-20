@@ -33,7 +33,7 @@ namespace game
 		void Play()
 		{
 			slWindow(screenWidth, screenHeight, "Cacho", false);
-			slLoadFont("src/aerial.ttf");
+			slLoadFont((fontDir + "aerial.ttf").c_str());
 			slSetFont(0, 15);
 
 			Initialize();
