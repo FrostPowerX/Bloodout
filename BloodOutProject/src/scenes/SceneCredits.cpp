@@ -2,6 +2,7 @@
 #include "..\ui\Panel.h"
 #include "..\GameLoop.h"
 #include "..\utilities\Constants.h"
+#include "..\utilities\Input.h"
 
 namespace game
 {
@@ -23,7 +24,7 @@ namespace game
 			rect.x = screenWidth / 2;
 			rect.y = screenHeight;
 
-			creditsContent[0] = CreatePanel(rect, "WuPong", 10, 10, 10, 10, 90, BLUE, YELLOW);
+			creditsContent[0] = CreatePanel(rect, GameName, 10, 10, 10, 10, 90, BLUE, YELLOW);
 			rect.y += creditsContent[0].rect.height;
 			
 			creditsContent[1] = CreatePanel(rect, "DEVELOPER", 10, 10, 10, 10, 40, BLUE, RED);
@@ -40,7 +41,7 @@ namespace game
 
 		void Input()
 		{
-			if (slGetKey(SL_KEY_ESCAPE))
+			if (GetKeyDown(SL_KEY_ESCAPE))
 			{
 				Init();
 				currentScene = SCENE::MENU;

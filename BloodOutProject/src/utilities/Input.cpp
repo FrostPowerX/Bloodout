@@ -31,17 +31,6 @@ TYPE_KEY MouseEvent(int key, TYPE_KEY typeOfGet)
 {
 	TYPE_KEY type = TYPE_KEY::NONE;
 
-	if (keys.size() <= 0)
-	{
-		Key newKey;
-
-		newKey.id = key;
-		newKey.isPressed = false;
-		newKey.wasPressed = false;
-
-		keys.push_back(newKey);
-	}
-
 	for (int i = 0; i < keys.size(); i++)
 	{
 		if (keys[i].id == key)
@@ -71,20 +60,20 @@ TYPE_KEY MouseEvent(int key, TYPE_KEY typeOfGet)
 
 				keys[i].wasPressed = false;
 			}
+
+			return type;
 		}
-		else
-		{
-			Key newKey;
-
-			newKey.id = key;
-			newKey.isPressed = false;
-			newKey.wasPressed = false;
-
-			keys.push_back(newKey);
-		}
-
-		return type;
 	}
+
+
+	Key newKey;
+
+	newKey.id = key;
+	newKey.isPressed = false;
+	newKey.wasPressed = false;
+
+	keys.push_back(newKey);
+
 
 	return type;
 }
@@ -92,17 +81,6 @@ TYPE_KEY MouseEvent(int key, TYPE_KEY typeOfGet)
 TYPE_KEY KeyEvent(int key, TYPE_KEY typeOfGet)
 {
 	TYPE_KEY type = TYPE_KEY::NONE;
-
-	if (keys.size() <= 0)
-	{
-		Key newKey;
-
-		newKey.id = key;
-		newKey.isPressed = false;
-		newKey.wasPressed = false;
-
-		keys.push_back(newKey);
-	}
 
 	for (int i = 0; i < keys.size(); i++)
 	{
@@ -133,23 +111,23 @@ TYPE_KEY KeyEvent(int key, TYPE_KEY typeOfGet)
 
 				keys[i].wasPressed = false;
 			}
+
+			return type;
 		}
-		else
-		{
-			Key newKey;
-
-			newKey.id = key;
-			newKey.isPressed = false;
-			newKey.wasPressed = false;
-
-			keys.push_back(newKey);
-		}
-
-		return type;
 	}
+
+	Key newKey;
+
+	newKey.id = key;
+	newKey.isPressed = false;
+	newKey.wasPressed = false;
+
+	keys.push_back(newKey);
 
 	return type;
 }
+
+
 
 bool GetMouseButtonPress(int key)
 {
