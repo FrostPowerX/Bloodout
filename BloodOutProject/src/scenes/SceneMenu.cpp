@@ -68,8 +68,7 @@ namespace game
 		{
 			if (GetKeyDown(SL_KEY_ESCAPE))
 			{
-				cout << "Se presiono\n";
-				//programLoop = false;
+				programLoop = false;
 			}
 		}
 
