@@ -7,6 +7,8 @@ struct HealthSystem
 	float currentHealth;
 };
 
+HealthSystem CreateHealth(float health);
+
 void Heal(HealthSystem& healthSystem, float heal);
 void TakeDamage(HealthSystem& healthSystem, float dmg);
 

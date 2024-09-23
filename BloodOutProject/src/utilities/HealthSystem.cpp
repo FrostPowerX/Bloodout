@@ -2,6 +2,15 @@
 
 #include "HealthSystem.h"
 
+HealthSystem CreateHealth(float health)
+{
+	HealthSystem newHeal;
+	newHeal.maxHealth = health;
+	newHeal.currentHealth = newHeal.maxHealth;
+
+	return newHeal;
+}
+
 void Heal(HealthSystem& healthSystem, float heal)
 {
 	heal = abs(heal);
