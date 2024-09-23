@@ -33,6 +33,16 @@ namespace game
 
 		Rectangle mapLimits;
 
+		Ball balls[MaxBalls];
+		Player player;
+
+		float palleteWidth;
+		float palleteHeight;
+		float palleteSpeed;
+
+		float ballRadius;
+		float ballSpeed;
+
 		float timeAccum;
 		float timeUpDiff;
 
@@ -51,6 +61,13 @@ namespace game
 			timeAccum = 0;
 
 			firstScreen = true;
+
+			palleteWidth = 30.f;
+			palleteHeight = 5.f;
+			palleteSpeed = 300.f;
+
+			ballRadius = 15.f;
+			ballSpeed = 320.f;
 
 			InitMap();
 
@@ -146,10 +163,10 @@ namespace game
 
 		void InitMap()
 		{
-			mapLimits.x = 0;
-			mapLimits.y = 0;
-			mapLimits.width = screenWidth - mapLimits.x;
-			mapLimits.height = screenHeight - mapLimits.y;
+			mapLimits.x = screenWidth / 2;
+			mapLimits.y = screenHeight / 2;
+			mapLimits.width = screenWidth;
+			mapLimits.height = screenHeight;
 		}
 
 		void InitUI()
@@ -179,17 +196,22 @@ namespace game
 
 			// infoTexts
 
-			
+
 		}
 
 		void InitPlayers()
 		{
+			Pallette pallette = CreatePallette(Vector2{ screenWidth / 2, OffSetSpawn }, RED, palleteWidth, palleteHeight, palleteSpeed);
 
+			//CreatePlayer(pallette, 0, 1);
 		}
 
 		void InitBalls()
 		{
-
+			for (int i = 0; i < MaxBalls; i++)
+			{
+				balls[i] = CreateBall(GRAY, player.pallette.rect.x, player.pallette.rect.y + ballRadius, ballRadius, ballSpeed);
+			}
 		}
 
 		void InitPowerUps()
@@ -201,44 +223,66 @@ namespace game
 
 		void PlayersInputs()
 		{
-			//Player 1 Controlls
+			if (GetKeyPress('A'))
+				MovePallette(player.pallette, -1, 0);
 
-			// Debug
-#ifndef NDEBUG
-
-
-#endif // #ifndef NDEBUG
+			if (GetKeyPress('D'))
+				MovePallette(player.pallette, 1, 0);
 		}
-
-
 
 		void MoveObjects()
 		{
+			for (int i = 0; i < MaxBalls; i++)
+			{
+				if (!balls[i].isActive)
+					continue;
 
+				MoveBall(balls[i]);
+			}
 		}
 
 		void CheckAllCollisions()
 		{
+			for (int i = 0; i < MaxBalls; i++)
+			{
+				if (!balls[i].isActive)
+					continue;
 
+				if (CheckCollision(balls[i].cir, player.pallette.rect))
+					switch (SolveCollision(balls[i].cir, player.pallette.rect))
+					{
+					case TYPE_PENETRATION::HORIZONTAL:
+						balls[i].dirX *= -1;
+						break;
+
+					case TYPE_PENETRATION::VERTICAL:
+						balls[i].dirY *= -1;
+						break;
+					}
+
+				if (CheckBorderCollision(balls[i].cir, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
+					SolveCollisionMap(balls[i], mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
+			}
 		}
 
 		void CheckVictoryCondition()
 		{
+			int ballsActive = 0;
 
-		}
-
-		void AddDifficulty()
-		{
-			/*for (int i = 0; i < MaxBalls; i++)
+			for (int i = 0; i < MaxBalls; i++)
 			{
 				if (balls[i].isActive)
-					balls[i].speed += speedAddDiff;
-			}*/
+					ballsActive++;
+			}
 
-			AddPower();
+			if (ballsActive <= 0)
+				endGameMenu = true;
 		}
 
+		void PeriodicEvent()
+		{
 
+		}
 
 		void DrawUI()
 		{
@@ -260,12 +304,16 @@ namespace game
 
 		void DrawPlayers()
 		{
-
+			DrawPallette(player.pallette);
 		}
 
 		void DrawBalls()
 		{
-
+			for (int i = 0; i < MaxBalls; i++)
+			{
+				if (balls[i].isActive)
+					DrawBall(balls[i]);
+			}
 		}
 
 		void DrawPowerUps()
@@ -294,11 +342,11 @@ namespace game
 
 			for (int i = 0; i < MaxBalls; i++)
 			{
-				/*if (!balls[i].isActive && count > 0)
+				if (!balls[i].isActive && count > 0)
 				{
 					balls[i].isActive = true;
 					count--;
-				}*/
+				}
 			}
 		}
 
@@ -308,11 +356,11 @@ namespace game
 
 			for (int i = 0; i < MaxBalls; i++)
 			{
-				/*if (balls[i].isActive && count > 0)
+				if (balls[i].isActive && count > 0)
 				{
 					balls[i].isActive = false;
 					count--;
-				}*/
+				}
 			}
 		}
 

@@ -21,16 +21,17 @@ enum TYPE_PENETRATION
 
 int GetRandomValue(int minValue, int maxValue);
 
-bool CheckCollision(Rectangle, Rectangle);
-bool CheckCollision(Rectangle, Circle);
+bool CheckCollision(Rectangle r1, Rectangle r2);
+bool CheckCollision(Rectangle r, Circle c);
 
-bool CheckCollision(Circle, Circle);
-bool CheckCollision(Circle, Rectangle);
+bool CheckCollision(Circle c1, Circle c2);
+bool CheckCollision(Circle c, Rectangle r);
 
 bool CheckBorderCollision(Circle, float maxWidth, float minWidth, float maxHeight, float minHeight);
 bool CheckBorderCollision(Rectangle, float maxWidth, float minWidth, float maxHeight, float minHeight);
 
-TYPE_PENETRATION SolveCollision(Rectangle&, Circle&);
+TYPE_PENETRATION SolveCollision(Rectangle& r, Circle& c);
+TYPE_PENETRATION SolveCollision(Circle& c, Rectangle& r);
 TYPE_PENETRATION SolveCollision(Circle& entityA, Circle& entityB);
 
 TYPE_PENETRATION SolveCollisionMap(Ball&, float maxWidth, float minWidth, float maxHeight, float minHeight);

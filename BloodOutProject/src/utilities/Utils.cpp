@@ -103,7 +103,7 @@ bool CheckBorderCollision(Rectangle rect, float maxWidth, float minWidth, float 
 	return false;
 }
 
-TYPE_PENETRATION SolveCollision(Rectangle& entityA, Circle& entityB)
+TYPE_PENETRATION SolveCollision(Rectangle& r, Circle& c)
 {
 	TYPE_PENETRATION typeOfPenetration = TYPE_PENETRATION::NONE;
 
@@ -111,19 +111,19 @@ TYPE_PENETRATION SolveCollision(Rectangle& entityA, Circle& entityB)
 	separationB.x = 0;
 	separationB.y = 0;
 
-	float widthAGB = entityA.width / 2;
-	float heightAGB = entityA.height / 2;
+	float widthAGB = r.width / 2;
+	float heightAGB = r.height / 2;
 
-	float widthBGB = entityB.radius;
-	float heightBGB = entityB.radius;
+	float widthBGB = c.radius;
+	float heightBGB = c.radius;
 
 	Vector2 entityACenteredPos;
-	entityACenteredPos.x = entityA.x;
-	entityACenteredPos.y = entityA.y;
+	entityACenteredPos.x = r.x;
+	entityACenteredPos.y = r.y;
 
 	Vector2 entityBCenteredPos;
-	entityBCenteredPos.x = entityB.x;
-	entityBCenteredPos.y = entityB.y;
+	entityBCenteredPos.x = c.x;
+	entityBCenteredPos.y = c.y;
 
 	Vector2 diff;
 
@@ -163,8 +163,74 @@ TYPE_PENETRATION SolveCollision(Rectangle& entityA, Circle& entityB)
 		typeOfPenetration = TYPE_PENETRATION::HORIZONTAL;
 	}
 
-	entityB.x += separationB.x;
-	entityB.y += separationB.y;
+	c.x += separationB.x;
+	c.y += separationB.y;
+
+	return typeOfPenetration;
+}
+
+TYPE_PENETRATION SolveCollision(Circle& c, Rectangle& r)
+{
+	TYPE_PENETRATION typeOfPenetration = TYPE_PENETRATION::NONE;
+
+	Vector2 separationB;
+	separationB.x = 0;
+	separationB.y = 0;
+
+	float widthAGB = r.width / 2;
+	float heightAGB = r.height / 2;
+
+	float widthBGB = c.radius;
+	float heightBGB = c.radius;
+
+	Vector2 entityACenteredPos;
+	entityACenteredPos.x = r.x;
+	entityACenteredPos.y = r.y;
+
+	Vector2 entityBCenteredPos;
+	entityBCenteredPos.x = c.x;
+	entityBCenteredPos.y = c.y;
+
+	Vector2 diff;
+
+	diff.x = entityBCenteredPos.x - entityACenteredPos.x;
+	diff.y = entityBCenteredPos.y - entityACenteredPos.y;
+
+	float minHorDistance = widthAGB + widthBGB;
+	float minVerDistance = heightAGB + heightBGB;
+
+	float horPenetration = minHorDistance - abs(diff.x);
+	float verPenetration = minVerDistance - abs(diff.y);
+
+	bool isPositiveDiff;
+	float displacementB = 0;
+	float displacementBSign;
+
+	if (horPenetration > verPenetration) // Colisionan verticalmente
+	{
+		isPositiveDiff = (diff.y > 0.f);
+		displacementBSign = (isPositiveDiff) ? 1.f : -1.f;
+
+		displacementB = verPenetration * displacementBSign;
+
+		separationB.y = displacementB;
+
+		typeOfPenetration = TYPE_PENETRATION::VERTICAL;
+	}
+	else // Colisionan horizontalmente
+	{
+		isPositiveDiff = (diff.x > 0.f);
+		displacementBSign = (isPositiveDiff) ? 1.f : -1.f;
+
+		displacementB = horPenetration * displacementBSign;
+
+		separationB.x = displacementB;
+
+		typeOfPenetration = TYPE_PENETRATION::HORIZONTAL;
+	}
+
+	c.x += separationB.x;
+	c.y += separationB.y;
 
 	return typeOfPenetration;
 }

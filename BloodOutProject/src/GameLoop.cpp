@@ -32,10 +32,6 @@ namespace game
 
 		void Play()
 		{
-			slWindow(screenWidth, screenHeight, "Cacho", false);
-			slLoadFont((fontDir + "aerial.ttf").c_str());
-			slSetFont(0, 15);
-
 			Initialize();
 
 			while (!slShouldClose() && programLoop)
@@ -50,6 +46,10 @@ namespace game
 
 		void Initialize()
 		{
+			slWindow(screenWidth, screenHeight, "Cacho", false);
+			slLoadFont((fontDir + "ChainsawCarnage.ttf").c_str());
+			slSetFont(0, 15);
+
 			menu::Init();
 			controls::Init();
 			gameplay::Init();

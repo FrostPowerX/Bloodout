@@ -24,7 +24,7 @@ namespace game
 		void MoveObjects();
 		void CheckAllCollisions();
 		void CheckVictoryCondition();
-		void AddDifficulty();
+		void PeriodicEvent();
 
 		void DrawUI();
 		void DrawPlayers();
