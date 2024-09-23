@@ -17,16 +17,11 @@ Ball CreateBall(Color color, float x, float y, float radius, float speed)
 
 	float angle = atan2(newBall.dirY, newBall.dirX);
 
-	float minAngleUp = 65.0f * (PI / 180.0f);
-	float maxAngleUp = 115.0f * (PI / 180.0f);
+	float minAngleUp = ConvertGradesToRadian(22.5f);
+	float maxAngleUp = ConvertGradesToRadian(157.5f);
 
-	float minAngleDown = 245.0f * (PI / 180.0f);
-	float maxAngleDown = 295.0f * (PI / 180.0f);
-
-	if (angle > minAngleUp && angle < maxAngleUp)
-		angle = (angle > minAngleUp) ? maxAngleUp : minAngleUp;
-	if (angle > minAngleDown && angle < maxAngleDown)
-		angle = (angle > minAngleDown) ? maxAngleDown : minAngleDown;
+	if (angle < minAngleUp && angle > maxAngleUp)
+		angle = (angle > maxAngleUp) ? maxAngleUp : minAngleUp;
 
 	newBall.dirX = cos(angle);
 	newBall.dirY = sin(angle);

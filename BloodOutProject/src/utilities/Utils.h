@@ -21,6 +21,8 @@ enum TYPE_PENETRATION
 
 int GetRandomValue(int minValue, int maxValue);
 
+float ConvertGradesToRadian(float grades);
+
 bool CheckCollision(Rectangle r1, Rectangle r2);
 bool CheckCollision(Rectangle r, Circle c);
 

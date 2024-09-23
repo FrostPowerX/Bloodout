@@ -31,6 +31,8 @@ const int TextsInGamePlay = 6;
 
 const int maxPowerUps = 6;
 
+const float maxBounceAngle = 60.f;
+
 const int OffSetSpawn = 50;
 
 #endif // !CONSTANTS

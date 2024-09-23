@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\entities\Ball.cpp" />
     <ClCompile Include="src\entities\Pallette.cpp" />
+    <ClCompile Include="src\entities\Player.cpp" />
     <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scenes\SceneControls.cpp" />
@@ -37,6 +38,7 @@
   <ItemGroup>
     <ClInclude Include="src\entities\Ball.h" />
     <ClInclude Include="src\entities\Pallette.h" />
+    <ClInclude Include="src\entities\Player.h" />
     <ClInclude Include="src\GameLoop.h" />
     <ClInclude Include="src\scenes\SceneControls.h" />
     <ClInclude Include="src\scenes\SceneCredits.h" />
@@ -128,7 +130,8 @@
       <AdditionalDependencies>sigil.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)libs\sigil-vc2015\*.dll" "$(OutDir)" /y</Command>
+      <Command>copy "$(SolutionDir)libs\sigil-vc2015\*.dll" "$(OutDir)" /y
+xcopy "$(SolutionDir)res" "$(OutDir)" /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Dopy DLLs....</Message>
@@ -154,7 +157,8 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)libs\sigil-vc2015\*.dll" "$(OutDir)" /y</Command>
+      <Command>copy "$(SolutionDir)libs\sigil-vc2015\*.dll" "$(OutDir)" /y
+xcopy "$(SolutionDir)res" "$(OutDir)" /y</Command>
       <Message>Dopy DLLs....</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

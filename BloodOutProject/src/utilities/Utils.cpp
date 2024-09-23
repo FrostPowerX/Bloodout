@@ -5,6 +5,11 @@ int GetRandomValue(int minValue, int maxValue)
 	return minValue + (rand() % (maxValue - minValue + 1));
 }
 
+float ConvertGradesToRadian(float grades)
+{
+	return grades * (PI / 180.f);
+}
+
 bool CheckCollision(Rectangle r1, Rectangle r2)
 {
 	float r1X2 = r1.x + (r1.width / 2);
@@ -429,7 +434,7 @@ void NormalizeVector(float& x, float& y)
 
 void BouncingAngle(Ball& ball, Rectangle& rect)
 {
-	float maxBounceAngle = 70.0f * (PI / 180.0f);
+	float maxAngle = ConvertGradesToRadian(maxBounceAngle);
 
 	float intersectPointX = ball.cir.x - rect.x;
 	float intersectPointY = ball.cir.y - rect.y;
@@ -437,12 +442,12 @@ void BouncingAngle(Ball& ball, Rectangle& rect)
 	float relativePointX = intersectPointX / (rect.width / 2);
 	float relativePointY = intersectPointY / (rect.height / 2);
 
-	float bounceAngle = relativePointY * maxBounceAngle;
+	float bounceAngle = relativePointX * maxAngle;
 
 	if (fabs(intersectPointX) > 1.f)
 	{
-		ball.dirX = relativePointY * cos(bounceAngle);
-		ball.dirY = sin(bounceAngle);
+		ball.dirY = relativePointY * cos(bounceAngle);
+		ball.dirX = sin(bounceAngle);
 	}
 	else
 	{

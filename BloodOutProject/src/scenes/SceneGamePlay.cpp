@@ -62,12 +62,12 @@ namespace game
 
 			firstScreen = true;
 
-			palleteWidth = 30.f;
-			palleteHeight = 5.f;
+			palleteWidth = 60.f;
+			palleteHeight = 10.f;
 			palleteSpeed = 300.f;
 
-			ballRadius = 15.f;
-			ballSpeed = 320.f;
+			ballRadius = 5.f;
+			ballSpeed = 500.f;
 
 			InitMap();
 
@@ -164,7 +164,7 @@ namespace game
 		void InitMap()
 		{
 			mapLimits.x = screenWidth / 2;
-			mapLimits.y = screenHeight / 2;
+			mapLimits.y = 0;
 			mapLimits.width = screenWidth;
 			mapLimits.height = screenHeight;
 		}
@@ -203,7 +203,7 @@ namespace game
 		{
 			Pallette pallette = CreatePallette(Vector2{ screenWidth / 2, OffSetSpawn }, RED, palleteWidth, palleteHeight, palleteSpeed);
 
-			//CreatePlayer(pallette, 0, 1);
+			player = CreatePlayer(pallette, 0, 1);
 		}
 
 		void InitBalls()
@@ -212,6 +212,7 @@ namespace game
 			{
 				balls[i] = CreateBall(GRAY, player.pallette.rect.x, player.pallette.rect.y + ballRadius, ballRadius, ballSpeed);
 			}
+			balls[0].isActive = true;
 		}
 
 		void InitPowerUps()
@@ -249,20 +250,17 @@ namespace game
 					continue;
 
 				if (CheckCollision(balls[i].cir, player.pallette.rect))
-					switch (SolveCollision(balls[i].cir, player.pallette.rect))
-					{
-					case TYPE_PENETRATION::HORIZONTAL:
-						balls[i].dirX *= -1;
-						break;
-
-					case TYPE_PENETRATION::VERTICAL:
-						balls[i].dirY *= -1;
-						break;
-					}
+				{
+					SolveCollision(balls[i].cir, player.pallette.rect);
+					BouncingAngle(balls[i], player.pallette.rect);
+				}
 
 				if (CheckBorderCollision(balls[i].cir, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
 					SolveCollisionMap(balls[i], mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
 			}
+
+			if (CheckBorderCollision(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
+				SolveCollisionMap(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
 		}
 
 		void CheckVictoryCondition()
@@ -321,11 +319,10 @@ namespace game
 
 		}
 
-
-
 		void RestartRound()
 		{
 			InitBalls();
+			InitPlayers();
 
 			timeAccum = 0;
 		}
