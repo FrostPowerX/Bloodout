@@ -19,7 +19,7 @@ Text CreateText(std::string text, int x, int y, int font, Color color)
 
 void DrawText(Text text)
 {
-    slSetForeColor(text.color.r, text.color.g, text.color.b, text.color.a);
+    SetForeColor(text.color);
     slSetFontSize(text.font);
     slText(text.position.x, text.position.y, text.text.c_str());
 }

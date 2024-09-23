@@ -59,6 +59,6 @@ void ChangeSpeedPallette(Pallette& pallette, float speed)
 
 void DrawPallette(Pallette& pallette)
 {
-    slSetForeColor(pallette.color.r, pallette.color.g, pallette.color.b, pallette.color.a);
+    SetForeColor(pallette.color);
     slRectangleFill(pallette.rect.x, pallette.rect.y, pallette.rect.width, pallette.rect.height);
 }

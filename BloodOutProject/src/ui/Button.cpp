@@ -12,9 +12,9 @@ Button CreateButton(Vector2 position, float width, float height, std::string tex
 	newB.rect.width = width;
 	newB.rect.height = height;
 
-	newB.text = text;
-	newB.fontSize = fontSize;
-	newB.textColor = textColor;
+	newB.text.text = text;
+	newB.text.font = fontSize;
+	newB.text.color = textColor;
 
 	newB.normalColor = normal;
 	newB.onMouseTopColor = onTop;
@@ -34,9 +34,9 @@ Button CreateButton(float x, float y, float width, float height, std::string tex
 	newB.rect.width = width;
 	newB.rect.height = height;
 
-	newB.text = text;
-	newB.fontSize = fontSize;
-	newB.textColor = textColor;
+	newB.text.text = text;
+	newB.text.font = fontSize;
+	newB.text.color = textColor;
 
 	newB.normalColor = normal;
 	newB.onMouseTopColor = onTop;
@@ -105,10 +105,10 @@ bool IsButtonPressed(Button& button)
 
 void SetText(Button& button, std::string text)
 {
-	slSetFontSize(button.fontSize);
+	slSetFontSize(button.text.font);
 
-	button.textPosition.x = button.rect.x - ((float)slGetTextWidth(button.text.c_str()) / 2);
-	button.textPosition.y = button.rect.y - (button.fontSize / 2);
+	button.text.position.x = button.rect.x - ((float)slGetTextWidth(button.text.text.c_str()) / 2);
+	button.text.position.y = button.rect.y - (button.text.font / 2);
 }
 
 void DrawButton(Button button)
@@ -126,10 +126,8 @@ void DrawButton(Button button)
 	else
 		usedColor = button.normalColor;
 
-	slSetForeColor(usedColor.r, usedColor.g, usedColor.b, usedColor.a);
+	SetForeColor(usedColor);
 	slRectangleFill(button.rect.x, button.rect.y, button.rect.width, button.rect.height);
 
-	slSetForeColor(button.textColor.r, button.textColor.g, button.textColor.b, button.textColor.a);
-	slSetFontSize(button.fontSize);
-	slText(button.textPosition.x, button.textPosition.y, button.text.c_str());
+	DrawText(button.text);
 }

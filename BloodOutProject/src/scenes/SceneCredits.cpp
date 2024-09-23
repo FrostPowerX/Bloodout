@@ -56,7 +56,7 @@ namespace game
 			for (int i = 0; i < maxLines; i++)
 			{
 				creditsContent[i].rect.y -= speedText * slGetDeltaTime();
-				creditsContent[i].textPosition.y -= speedText * slGetDeltaTime();
+				creditsContent[i].text.position.y -= speedText * slGetDeltaTime();
 			}
 
 			if(creditsContent[maxLines - 1].rect.y + creditsContent[maxLines - 1].rect.height < 0)

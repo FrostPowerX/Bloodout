@@ -6,6 +6,7 @@
 #include "Rectangle.h"
 #include "Color.h"
 #include "Vector2.h"
+#include "Text.h"
 
 using namespace std;
 
@@ -13,9 +14,7 @@ struct Panel
 {
 	Rectangle rect;
 	
-	string text;
-
-	Vector2 textPosition;
+	Text text;
 
 	float minOffSetX = 0;
 	float maxOffSetX = 0;
@@ -23,10 +22,7 @@ struct Panel
 	float minOffSetY = 0;
 	float maxOffSetY = 0;
 
-	int fontSizeText = 0;
-
 	Color rectColor = WHITE;
-	Color textColor = WHITE;
 };
 
 Panel CreatePanel(Rectangle rect, string text, float minOffSetX, float maxOffSetX, float minOffSetY, float maxOffSetY, int fontSize, Color rectColor, Color textColor);
@@ -37,7 +33,7 @@ void SetText(Panel& panel, string text);
 void SetColorText(Panel& panel, Color color);
 void SetBackGroundColor(Panel& panel, Color color);
 
-void DrawPanel(Panel);
+void DrawPanel(Panel panel);
 
 #endif // !PANEL
 

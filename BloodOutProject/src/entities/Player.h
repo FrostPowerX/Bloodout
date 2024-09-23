@@ -16,8 +16,8 @@ struct Player
 
 Player CreatePlayer(Pallette pallette, float health, int score, int id);
 
-void AddScore(Player&, int score);
+void AddScore(Player& player, int score);
 
-int GetId(Player&);
+int GetId(Player& player);
 
 #endif // !PLAYER

@@ -22,16 +22,16 @@ struct Ball
 
 Ball CreateBall(Color, float x, float y ,float radius, float speed);
 
-void TeleportBall(Ball&, float, float);
+void TeleportBall(Ball& ball, float x, float y);
 
-void MoveBall(Ball&);
+void MoveBall(Ball& ball);
 
-void ChangeColorBall(Ball&, Color);
+void ChangeColorBall(Ball& ball, Color color);
 
-void ChangeRadiusBall(Ball&, float);
+void ChangeRadiusBall(Ball& ball, float radius);
 
-void ChangeBallSpeed(Ball&, float);
+void ChangeBallSpeed(Ball& ball, float speed);
 
-void DrawBall(Ball&);
+void DrawBall(Ball& ball);
 
 #endif // !BALL

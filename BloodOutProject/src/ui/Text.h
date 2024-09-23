@@ -16,7 +16,7 @@ struct Text
 	Color color;
 };
 
-Text CreateText(std::string, int x, int y, int font, Color color);
+Text CreateText(std::string text, int x, int y, int font, Color color);
 
 void DrawText(Text text);
 

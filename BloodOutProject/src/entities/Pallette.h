@@ -19,15 +19,15 @@ Pallette CreatePallette(Vector2, Color, float width, float height, float speed);
 
 void MovePallette(Pallette&, float dirX, float dirY);
 
-void ChangeColorPallette(Pallette&, Color);
+void ChangeColorPallette(Pallette& pallette, Color color);
 
-void ChangeWidthPall(Pallette&, float);
+void ChangeWidthPall(Pallette& pallette, float width);
 
-void ChangeHeightPall(Pallette&, float);
+void ChangeHeightPall(Pallette& pallette, float height);
 
-void ChangeSpeedPallette(Pallette&, float);
+void ChangeSpeedPallette(Pallette& pallette, float speed);
 
-void DrawPallette(Pallette&);
+void DrawPallette(Pallette& pallette);
 
 #endif // !PALLETE
 

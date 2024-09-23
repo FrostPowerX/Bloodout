@@ -76,7 +76,7 @@ void ChangeBallSpeed(Ball& ball, float speed)
 
 void DrawBall(Ball& ball)
 {
-	slSetForeColor(ball.color.r, ball.color.g, ball.color.b, ball.color.a);
+	SetForeColor(ball.color);
 	slCircleFill(ball.cir.x, ball.cir.y, ball.cir.radius, 15);
 	//slSetForeColor(0, 0, 0, 0);
 }

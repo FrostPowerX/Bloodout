@@ -6,7 +6,7 @@ Panel CreatePanel(Rectangle rect, string text, float minOffSetX, float maxOffSet
     Panel newP;
 
     newP.rect = rect;
-    newP.text = text;
+    newP.text.text = text;
 
     newP.minOffSetX = minOffSetX;
     newP.maxOffSetX = maxOffSetX;
@@ -14,18 +14,18 @@ Panel CreatePanel(Rectangle rect, string text, float minOffSetX, float maxOffSet
     newP.minOffSetY = minOffSetY;
     newP.maxOffSetY = maxOffSetY;
 
-    newP.fontSizeText = fontSize;
+    newP.text.font = fontSize;
 
     newP.rectColor = rectColor;
-    newP.textColor = textColor;
+    newP.text.color = textColor;
 
-    slSetFontSize(newP.fontSizeText);
+    slSetFontSize(newP.text.font);
 
-    newP.rect.width = newP.minOffSetX + newP.maxOffSetX + slGetTextWidth(newP.text.c_str());
-    newP.rect.height = newP.minOffSetY + newP.maxOffSetY + newP.fontSizeText;
+    newP.rect.width = newP.minOffSetX + newP.maxOffSetX + slGetTextWidth(newP.text.text.c_str());
+    newP.rect.height = newP.minOffSetY + newP.maxOffSetY + newP.text.font;
     
-    newP.textPosition.x = newP.rect.x + newP.minOffSetX - (slGetTextWidth(newP.text.c_str()) / 2);
-    newP.textPosition.y = newP.rect.y + newP.minOffSetY - (newP.fontSizeText / 2);
+    newP.text.position.x = newP.rect.x + newP.minOffSetX - (slGetTextWidth(newP.text.text.c_str()) / 2);
+    newP.text.position.y = newP.rect.y + newP.minOffSetY - (newP.text.font / 2);
 
     return newP;
 }
@@ -38,25 +38,25 @@ void SetPanelPosition(Panel& panel, Vector2 newPos)
     panel.rect.x = panel.rect.x;
     panel.rect.y = panel.rect.y;
 
-    SetText(panel, panel.text);
+    SetText(panel, panel.text.text);
 }
 
 void SetText(Panel& panel, string text)
 {
-    panel.text = text;
+    panel.text.text = text;
 
-    slSetFontSize(panel.fontSizeText);
+    slSetFontSize(panel.text.font);
 
-    panel.rect.width = panel.minOffSetX + panel.maxOffSetX + slGetTextWidth(panel.text.c_str());
-    panel.rect.height = panel.minOffSetY + panel.maxOffSetY + panel.fontSizeText;
+    panel.rect.width = panel.minOffSetX + panel.maxOffSetX + slGetTextWidth(panel.text.text.c_str());
+    panel.rect.height = panel.minOffSetY + panel.maxOffSetY + panel.text.font;
 
-    panel.textPosition.x = panel.rect.x + panel.minOffSetX - (slGetTextWidth(panel.text.c_str()) / 2);
-    panel.textPosition.y = panel.rect.y + panel.minOffSetY - panel.fontSizeText;
+    panel.text.position.x = panel.rect.x + panel.minOffSetX - (slGetTextWidth(panel.text.text.c_str()) / 2);
+    panel.text.position.y = panel.rect.y + panel.minOffSetY - panel.text.font;
 }
 
 void SetColorText(Panel& panel, Color color)
 {
-    panel.textColor = color;
+    panel.text.color = color;
 }
 
 void SetBackGroundColor(Panel& panel, Color color)
@@ -66,10 +66,8 @@ void SetBackGroundColor(Panel& panel, Color color)
 
 void DrawPanel(Panel panel)
 {
-    slSetForeColor(panel.rectColor.r, panel.rectColor.g, panel.rectColor.b, panel.rectColor.a);
+    SetForeColor(panel.rectColor);
     slRectangleFill(panel.rect.x, panel.rect.y, panel.rect.width, panel.rect.height);
 
-    slSetForeColor(panel.textColor.r, panel.textColor.g, panel.textColor.b, panel.textColor.a);
-    slSetFontSize(panel.fontSizeText);
-    slText(panel.textPosition.x, panel.textPosition.y, panel.text.c_str());
+    DrawText(panel.text);
 }
