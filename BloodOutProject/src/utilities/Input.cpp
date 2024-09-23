@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#include "sl.h"
+
 using namespace std;
 
 struct Key

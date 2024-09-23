@@ -5,8 +5,6 @@
 
 #include <iostream>
 
-#include "sl.h"
-
 const std::string resourcesDir = "res/";
 const std::string fontDir = resourcesDir + "fonts/";
 

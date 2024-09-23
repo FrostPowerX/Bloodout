@@ -1,4 +1,5 @@
 #include "Panel.h"
+#include "sl.h"
 
 Panel CreatePanel(Rectangle rect, string text, float minOffSetX, float maxOffSetX, float minOffSetY, float maxOffSetY, int fontSize, Color rectColor, Color textColor)
 {

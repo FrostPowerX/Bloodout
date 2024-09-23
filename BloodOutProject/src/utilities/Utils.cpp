@@ -1,5 +1,10 @@
 #include "Utils.h"
 
+#include "sl.h"
+
+#include "Constants.h"
+#include "Vector2.h";
+
 int GetRandomValue(int minValue, int maxValue)
 {
 	return minValue + (rand() % (maxValue - minValue + 1));

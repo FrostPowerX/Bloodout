@@ -1,11 +1,8 @@
 #ifndef BALL
 #define BALL
 
-#include <iostream>
-
-#include "sl.h"
-#include "../utilities/Color.h"
-#include "..\utilities\Circle.h"
+#include "Color.h"
+#include "Circle.h"
 
 struct Ball
 {

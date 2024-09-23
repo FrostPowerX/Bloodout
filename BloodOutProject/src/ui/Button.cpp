@@ -1,4 +1,7 @@
+#include "sl.h"
+
 #include "Button.h"
+#include "Input.h"
 
 Button CreateButton(Vector2 position, float width, float height, std::string text, int fontSize, Color textColor, Color normal, Color onTop, Color pressed)
 {

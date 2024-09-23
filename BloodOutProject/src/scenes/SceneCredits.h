@@ -1,8 +1,6 @@
 #ifndef SCENE_CREDITS
 #define SCENE_CREDITS
 
-#include "sl.h"
-
 namespace game
 {
 	namespace credits

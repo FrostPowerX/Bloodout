@@ -3,10 +3,9 @@
 
 #include <string>
 
-#include "sl.h"
-#include "..\utilities\Rectangle.h"
-#include "..\utilities\Color.h"
-#include "..\utilities\Vector2.h"
+#include "Rectangle.h"
+#include "Color.h"
+#include "Vector2.h"
 
 using namespace std;
 

@@ -13,8 +13,8 @@
 
 #include "utilities/Constants.h"
 #include "utilities/Color.h"
-#include "utilities/Utils.h"
-#include "utilities/Input.h"
+#include "Utils.h"
+#include "Input.h"
 
 namespace game
 {

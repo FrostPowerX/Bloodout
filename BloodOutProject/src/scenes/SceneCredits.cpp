@@ -1,8 +1,11 @@
 #include "SceneCredits.h"
-#include "..\ui\Panel.h"
-#include "..\GameLoop.h"
-#include "..\utilities\Constants.h"
-#include "..\utilities\Input.h"
+
+#include "sl.h"
+
+#include "Panel.h"
+#include "GameLoop.h"
+#include "Constants.h"
+#include "Input.h"
 
 namespace game
 {

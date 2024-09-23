@@ -3,12 +3,9 @@
 
 #include <iostream>
 
-#include "Constants.h"
-#include "sl.h"
 #include "Circle.h"
 #include "Rectangle.h"
-#include "Vector2.h";
-#include "..\entities\Ball.h"
+#include "Ball.h"
 
 #define PI 3.14159265359
 

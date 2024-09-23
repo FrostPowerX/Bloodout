@@ -1,13 +1,15 @@
 #include "SceneMenu.h"
 
-#include "..\utilities\Constants.h"
-#include "..\utilities\Utils.h"
-#include "..\utilities\Input.h"
+#include "sl.h"
 
-#include "..\ui\Button.h"
-#include "..\ui\Panel.h"
+#include "Constants.h"
+#include "Utils.h"
+#include "Input.h"
 
-#include "..\GameLoop.h"
+#include "Button.h"
+#include "Panel.h"
+
+#include "GameLoop.h"
 
 namespace game
 {

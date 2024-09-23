@@ -1,5 +1,7 @@
 #include "Pallette.h"
-#include "..\utilities\Constants.h"
+
+#include "sl.h"
+#include "Constants.h"
 
 Pallette CreatePallette(Vector2 position, Color color, float width, float height, float speed)
 {

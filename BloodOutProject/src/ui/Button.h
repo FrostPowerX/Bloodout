@@ -3,11 +3,9 @@
 
 #include <string>
 
-#include "sl.h"
-#include "..\utilities\Rectangle.h"
-#include "..\utilities\Vector2.h"
-#include "..\utilities\Color.h"
-#include "..\utilities\Input.h"
+#include "Rectangle.h"
+#include "Vector2.h"
+#include "Color.h"
 
 struct Button
 {

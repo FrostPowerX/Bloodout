@@ -1,4 +1,5 @@
 #include "Text.h"
+#include "sl.h"
 
 Text CreateText(std::string text, int x, int y, int font, Color color)
 {

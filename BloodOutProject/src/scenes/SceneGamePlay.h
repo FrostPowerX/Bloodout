@@ -1,7 +1,6 @@
 #ifndef GAME_PLAY_SCENE
 #define GAME_PLAY_SCENE
 
-#include "sl.h"
 
 namespace game
 {

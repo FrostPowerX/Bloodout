@@ -1,5 +1,7 @@
 #include "Ball.h"
-#include "..\utilities\Utils.h"
+
+#include "sl.h"
+#include "Utils.h"
 
 Ball CreateBall(Color color, float x, float y, float radius, float speed)
 {

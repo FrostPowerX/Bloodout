@@ -32,6 +32,7 @@
     <ClCompile Include="src\ui\Panel.cpp" />
     <ClCompile Include="src\ui\Text.cpp" />
     <ClCompile Include="src\utilities\Color.cpp" />
+    <ClCompile Include="src\utilities\HealthSystem.cpp" />
     <ClCompile Include="src\utilities\Input.cpp" />
     <ClCompile Include="src\utilities\Utils.cpp" />
   </ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="src\utilities\Circle.h" />
     <ClInclude Include="src\utilities\Color.h" />
     <ClInclude Include="src\utilities\Constants.h" />
+    <ClInclude Include="src\utilities\HealthSystem.h" />
     <ClInclude Include="src\utilities\Input.h" />
     <ClInclude Include="src\utilities\Rectangle.h" />
     <ClInclude Include="src\utilities\Utils.h" />
@@ -121,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\sigil-vc2015\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)src\entities;$(SolutionDir)src\scenes;$(SolutionDir)src\ui;$(SolutionDir)src\utilities;$(SolutionDir)libs\sigil-vc2015\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,7 +147,7 @@ xcopy "$(SolutionDir)res" "$(OutDir)" /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\sigil-vc2015\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;$(SolutionDir)src\entities;$(SolutionDir)src\scenes;$(SolutionDir)src\ui;$(SolutionDir)src\utilities;$(SolutionDir)libs\sigil-vc2015\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

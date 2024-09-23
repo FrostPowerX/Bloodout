@@ -3,9 +3,8 @@
 
 #include <iostream>
 
-#include "sl.h"
-#include "..\utilities\Vector2.h"
-#include "..\utilities\Color.h"
+#include "Vector2.h"
+#include "Color.h"
 
 struct Text
 {

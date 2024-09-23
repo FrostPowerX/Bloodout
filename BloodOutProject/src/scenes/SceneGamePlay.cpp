@@ -1,19 +1,21 @@
 #include "SceneGamePlay.h"
 
-#include "..\GameLoop.h"
+#include "sl.h"
 
-#include "..\utilities\Constants.h"
-#include "..\utilities\Utils.h"
-#include "..\utilities\Input.h"
+#include "GameLoop.h"
 
-#include "..\entities\Pallette.h"
-#include "..\entities\Ball.h"
-#include "..\entities\PowerUp.h"
-#include "..\entities\Player.h"
+#include "Constants.h"
+#include "Utils.h"
+#include "Input.h"
 
-#include "..\ui\Button.h"
-#include "..\ui\Panel.h"
-#include "..\ui\Text.h"
+#include "Pallette.h"
+#include "Ball.h"
+#include "PowerUp.h"
+#include "Player.h"
+
+#include "Button.h"
+#include "Panel.h"
+#include "Text.h"
 
 namespace game
 {

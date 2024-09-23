@@ -1,10 +1,9 @@
 #ifndef PALLETE
 #define PALLETE
 
-#include "sl.h"
-#include "..\utilities\Color.h"
-#include "..\utilities\Rectangle.h"
-#include "..\utilities\Vector2.h"
+#include "Color.h"
+#include "Rectangle.h"
+#include "Vector2.h"
 
 struct Pallette
 {

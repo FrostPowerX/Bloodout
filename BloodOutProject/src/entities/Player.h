@@ -2,10 +2,13 @@
 #define PLAYER
 
 #include "Pallette.h"
+#include "HealthSystem.h"
 
 struct Player
 {
 	Pallette pallette;
+
+	HealthSystem health;
 
 	int score = 0;
 	int id = 0;
