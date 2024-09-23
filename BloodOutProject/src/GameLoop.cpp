@@ -3,16 +3,16 @@
 #include "sl.h"
 #include "GameLoop.h"
 
-#include "entities/Ball.h"
-#include "entities/Pallette.h"
+#include "Ball.h"
+#include "Pallette.h"
 
-#include "scenes/SceneMenu.h"
-#include "scenes/SceneGamePlay.h"
-#include "scenes/SceneControls.h"
-#include "scenes/SceneCredits.h"
+#include "SceneMenu.h"
+#include "SceneGamePlay.h"
+#include "SceneControls.h"
+#include "SceneCredits.h"
 
-#include "utilities/Constants.h"
-#include "utilities/Color.h"
+#include "Constants.h"
+#include "Color.h"
 #include "Utils.h"
 #include "Input.h"
 
@@ -30,6 +30,8 @@ namespace game
 		void Update();
 		void Draw();
 
+		void Deinitialize();
+
 		void Play()
 		{
 			Initialize();
@@ -41,7 +43,7 @@ namespace game
 				Draw();
 			}
 
-			slClose();
+			Deinitialize();
 		}
 
 		void Initialize()
@@ -131,6 +133,11 @@ namespace game
 			}
 
 			slRender();
+		}
+
+		void Deinitialize()
+		{
+			slClose();
 		}
 	}
 }

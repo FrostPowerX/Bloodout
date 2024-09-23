@@ -69,7 +69,7 @@ bool MouseOnTopButton(Button& button)
 	mousePosition.x = (float)slGetMouseX();
 	mousePosition.y = (float)slGetMouseY();
 
-	float minValueX = button.rect.x - (button.rect.width /2);
+	float minValueX = button.rect.x - (button.rect.width / 2);
 	float minValueY = button.rect.y - (button.rect.height / 2);
 
 	float maxValueX = button.rect.x + (button.rect.width / 2);
@@ -78,19 +78,9 @@ bool MouseOnTopButton(Button& button)
 	bool onTopX = (mousePosition.x >= minValueX && mousePosition.x <= maxValueX);
 	bool onTopY = (mousePosition.y >= minValueY && mousePosition.y <= maxValueY);
 
-	bool onTop = false;
+	bool onTop = (onTopX && onTopY);
 
-	if (onTopX && onTopY)
-	{
-		button.isMouseOnTop = true;
-		onTop = true;
-	}
-	else
-	{
-		button.isMouseOnTop = false;
-		onTop = false;
-	}
-
+	button.isMouseOnTop = onTop;
 
 	return onTop;
 }
@@ -99,17 +89,14 @@ bool IsButtonPressed(Button& button)
 {
 	bool isReleassed = false;
 
+	if (!MouseOnTopButton(button))
+		return isReleassed;
+
 	if (GetMouseButtonUp(SL_MOUSE_BUTTON_LEFT))
-		if (button.isMouseOnTop)
-			isReleassed = true;
+		isReleassed = (button.isMouseOnTop && button.isPressed);
 
 	if (GetMouseButtonPress(SL_MOUSE_BUTTON_LEFT))
-	{
-		if (button.isMouseOnTop)
-			button.isPressed = true;
-		else
-			button.isPressed = false;
-	}
+		button.isPressed = button.isMouseOnTop;
 	else
 		button.isPressed = false;
 
@@ -128,7 +115,7 @@ void DrawButton(Button button)
 {
 	Color usedColor = WHITE;
 
-	if (button.isPressed)
+	if (button.isPressed && button.isMouseOnTop)
 	{
 		usedColor = button.pressedColor;
 	}

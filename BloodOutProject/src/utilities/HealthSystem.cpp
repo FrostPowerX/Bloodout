@@ -25,6 +25,16 @@ void TakeDamage(HealthSystem& healthSystem, float dmg)
 	healthSystem.currentHealth -= (healthSystem.currentHealth > dmg) ? dmg : healthSystem.currentHealth;
 }
 
+void SetHealth(HealthSystem& healthSystem, float health)
+{
+	healthSystem.currentHealth = (health > healthSystem.maxHealth) ? healthSystem.maxHealth : health;
+}
+
+void SetMaxHealth(HealthSystem& healthSystem, float maxHealth)
+{
+	healthSystem.maxHealth = maxHealth;
+}
+
 bool IsAlive(HealthSystem healthSystem)
 {
 	return healthSystem.currentHealth > 0;

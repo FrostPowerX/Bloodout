@@ -79,32 +79,27 @@ namespace game
 
 			for (int i = 0; i < ButtonsInMenu; i++)
 			{
-				if (MouseOnTopButton(buttons[i]))
-					if (IsButtonPressed(buttons[i]))
+				if (IsButtonPressed(buttons[i]))
+				{
+					switch (OPTIONS_MENU(i))
 					{
-						switch (OPTIONS_MENU(i))
-						{
-						case OPTIONS_MENU::PLAY:
-							currentScene = SCENE::GAMEPLAY;
-							break;
+					case OPTIONS_MENU::PLAY:
+						currentScene = SCENE::GAMEPLAY;
+						break;
 
-						case OPTIONS_MENU::CONTROLS:
-							currentScene = SCENE::CONTROLS;
-							break;
+					case OPTIONS_MENU::CONTROLS:
+						currentScene = SCENE::CONTROLS;
+						break;
 
-						case OPTIONS_MENU::CREDITS:
-							currentScene = SCENE::CREDITS;
-							break;
+					case OPTIONS_MENU::CREDITS:
+						currentScene = SCENE::CREDITS;
+						break;
 
-						case OPTIONS_MENU::EXIT:
-							programLoop = false;
-							break;
-
-
-						default:
-							break;
-						}
+					case OPTIONS_MENU::EXIT:
+						programLoop = false;
+						break;
 					}
+				}
 			}
 
 		}

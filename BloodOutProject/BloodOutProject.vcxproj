@@ -31,6 +31,7 @@
     <ClCompile Include="src\ui\Button.cpp" />
     <ClCompile Include="src\ui\Panel.cpp" />
     <ClCompile Include="src\ui\Text.cpp" />
+    <ClCompile Include="src\utilities\Brick.cpp" />
     <ClCompile Include="src\utilities\Color.cpp" />
     <ClCompile Include="src\utilities\HealthSystem.cpp" />
     <ClCompile Include="src\utilities\Input.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="src\ui\Button.h" />
     <ClInclude Include="src\ui\Panel.h" />
     <ClInclude Include="src\ui\Text.h" />
+    <ClInclude Include="src\utilities\Brick.h" />
     <ClInclude Include="src\utilities\Circle.h" />
     <ClInclude Include="src\utilities\Color.h" />
     <ClInclude Include="src\utilities\Constants.h" />

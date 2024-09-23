@@ -87,6 +87,9 @@
     <ClCompile Include="src\utilities\Color.cpp">
       <Filter>Archivos de origen\Utilitites</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\Brick.cpp">
+      <Filter>Archivos de origen\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameLoop.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="src\utilities\Circle.h">
       <Filter>Archivos de encabezado\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\Brick.h">
+      <Filter>Archivos de encabezado\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

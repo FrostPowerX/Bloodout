@@ -14,7 +14,7 @@ struct Player
 	int id = 0;
 };
 
-Player CreatePlayer(Pallette, int score, int id);
+Player CreatePlayer(Pallette pallette, float health, int score, int id);
 
 void AddScore(Player&, int score);
 

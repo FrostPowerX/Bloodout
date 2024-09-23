@@ -11,6 +11,8 @@ HealthSystem CreateHealth(float health);
 
 void Heal(HealthSystem& healthSystem, float heal);
 void TakeDamage(HealthSystem& healthSystem, float dmg);
+void SetHealth(HealthSystem& healthSystem, float health);
+void SetMaxHealth(HealthSystem& healthSystem, float maxHealth);
 
 bool IsAlive(HealthSystem healthSystem);
 

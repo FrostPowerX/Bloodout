@@ -205,7 +205,7 @@ namespace game
 		{
 			Pallette pallette = CreatePallette(Vector2{ screenWidth / 2, OffSetSpawn }, RED, palleteWidth, palleteHeight, palleteSpeed);
 
-			player = CreatePlayer(pallette, 0, 1);
+			player = CreatePlayer(pallette, 3.f, 0, 1);
 		}
 
 		void InitBalls()
