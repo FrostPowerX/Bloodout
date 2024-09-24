@@ -35,9 +35,11 @@ namespace game
 		Button buttonEndGame;
 
 		Rectangle mapLimits;
+		Rectangle barrier;
 
 		Ball balls[MaxBalls];
 		Brick bricks[MaxBricks];
+		PowerUp powerUps[maxPowerUps];
 
 		Player player;
 
@@ -57,7 +59,9 @@ namespace game
 		int maxBrickLines;
 
 		float timeAccum;
-		float timeUpDiff;
+		float timeActiveBarrier;
+
+		bool activeBarrier;
 
 		bool endGameMenu;
 		bool pauseGame;
@@ -65,6 +69,7 @@ namespace game
 		bool firstScreen;
 
 		void InitMap();
+		void InitBarrier();
 		void InitUI();
 		void InitPlayers();
 		void InitBalls();
@@ -83,14 +88,15 @@ namespace game
 		void DrawBalls();
 		void DrawBricks();
 		void DrawPowerUps();
+		void DrawBarrier();
 		void DrawMap();
 
 		void RestartRound();
 		void RestartGame();
 
-		void AddBalls(int cant);
+		void AddBalls(int cant, float posX, float posY);
 		void RemoveBalls(int cant);
-		void AddPower();
+		void AddPower(float posX, float posY);
 
 
 
@@ -100,8 +106,9 @@ namespace game
 
 			pauseGame = false;
 			endGameMenu = false;
+			activeBarrier = false;
 
-			timeUpDiff = 10.f;
+			timeActiveBarrier = 10.f;
 
 			timeAccum = 0;
 
@@ -124,6 +131,7 @@ namespace game
 
 			InitUI();
 
+			InitBarrier();
 			InitPlayers();
 			InitBalls();
 			InitBricks();
@@ -186,11 +194,12 @@ namespace game
 				return;
 			}
 
-			if (timeAccum >= timeUpDiff)
+			if (timeAccum >= timeActiveBarrier)
 			{
-				timeAccum -= timeUpDiff;
+				timeAccum -= timeActiveBarrier;
+				activeBarrier = false;
 			}
-			else
+			else if (activeBarrier)
 				timeAccum += slGetDeltaTime();
 
 			for (int i = 0; i < MaxBricks; i++)
@@ -219,6 +228,7 @@ namespace game
 			DrawBalls();
 			DrawBricks();
 			DrawPowerUps();
+			DrawBarrier();
 			DrawMap();
 
 			DrawUI();
@@ -228,10 +238,23 @@ namespace game
 
 		void InitMap()
 		{
-			mapLimits.x = screenWidth / 3;
+			mapLimits.x = screenWidth / 2;
 			mapLimits.y = 0;
 			mapLimits.width = screenWidth;
 			mapLimits.height = screenHeight;
+		}
+
+		void InitBarrier()
+		{
+			float totalWidth = abs(mapLimits.x - mapLimits.width);
+
+			barrier.x = mapLimits.x + totalWidth / 2;
+			barrier.y = mapLimits.y + (OffSetSpawnPlayer / 2);
+
+			barrier.width = totalWidth;
+			barrier.height = OffSetSpawnBrick;
+
+			activeBarrier = false;
 		}
 
 		void InitUI()
@@ -338,7 +361,30 @@ namespace game
 
 		void InitPowerUps()
 		{
+			Rectangle rect;
+			rect.x = 0;
+			rect.y = 0;
+			rect.width = 20;
+			rect.height = 20;
 
+			int count = 0;
+			int powersPerType = 5;
+
+			for (int i = 0; i < maxPowerUps; i++)
+			{
+				if (count < powersPerType)
+					powerUps[i] = CreatePowerUp(rect, WHITE, 10, 0, 0, 0);
+				else if (count < powersPerType * 2)
+					powerUps[i] = CreatePowerUp(rect, WHITE, 0, 25, 0, 0);
+				else if (count < powersPerType * 3)
+					powerUps[i] = CreatePowerUp(rect, WHITE, 0, 0, 0, 2);
+				else if (count < powersPerType * 4)
+					powerUps[i] = CreatePowerUp(rect, WHITE, 0, 0, 10.f, 0);
+
+				powerUps[i].speed = 300;
+
+				count++;
+			}
 		}
 
 
@@ -364,6 +410,14 @@ namespace game
 					continue;
 
 				MoveBall(balls[i]);
+			}
+
+			for (int i = 0; i < maxPowerUps; i++)
+			{
+				if (!powerUps[i].isActive)
+					continue;
+
+				MovePowerUp(powerUps[i], 0, -1);
 			}
 		}
 
@@ -396,6 +450,8 @@ namespace game
 
 						TakeDamage(bricks[j].health, 1.f);
 						AddScore(player, 10);
+
+						AddPower(bricks[j].rect.x, bricks[j].rect.y);
 					}
 
 				}
@@ -412,15 +468,60 @@ namespace game
 					switch (SolveCollisionMap(balls[i], mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
 					{
 					case TYPE_PENETRATION::VERTICAL:
-						if (balls[i].cir.y < mapLimits.height)
+						if (balls[i].cir.y < screenHeight / 2)
 							balls[i].isActive = false;
 						break;
 					}
+
+				// Collision with Barrier
+				if (activeBarrier)
+					if (CheckCollision(balls[i].cir, barrier))
+						switch (SolveCollision(balls[i].cir, barrier))
+						{
+						case TYPE_PENETRATION::VERTICAL:
+							balls[i].dirY *= -1;
+							break;
+
+						case TYPE_PENETRATION::HORIZONTAL:
+							balls[i].dirX *= -1;
+							break;
+						}
 			}
 
 			// Collisions Player with map
 			if (CheckBorderCollision(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
 				SolveCollisionMap(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
+
+			// Collisions PowerUp with Player
+			for (int i = 0; i < maxPowerUps; i++)
+			{
+				if (!powerUps[i].isActive)
+					continue;
+
+				if (CheckCollision(player.pallette.rect, powerUps[i].rect))
+				{
+					for (int j = 0; j < MaxBalls; j++)
+					{
+						if (balls[j].isActive)
+						{
+							AddBalls(powerUps[i].addBalls, balls[j].cir.x, balls[j].cir.y);
+							break;
+						}
+					}
+
+					player.pallette.rect.width += powerUps[i].addWidth;
+					player.pallette.speed += powerUps[i].addSpeed;
+
+					if (powerUps[i].secondsInvulerable > 0)
+					{
+						timeActiveBarrier = powerUps[i].secondsInvulerable;
+						timeAccum = 0;
+						activeBarrier = true;
+					}
+
+					powerUps[i].isActive = false;
+				}
+			}
 		}
 
 		void LoseCondition()
@@ -506,7 +607,22 @@ namespace game
 
 		void DrawPowerUps()
 		{
+			for (int i = 0; i < maxPowerUps; i++)
+			{
+				if (!powerUps[i].isActive)
+					continue;
 
+				DrawPowerUp(powerUps[i]);
+			}
+		}
+
+		void DrawBarrier()
+		{
+			if (activeBarrier)
+			{
+				SetForeColor(GREEN);
+				slRectangleFill(barrier.x, barrier.y, barrier.width, barrier.height);
+			}
 		}
 
 		void DrawMap()
@@ -526,6 +642,7 @@ namespace game
 		void RestartRound()
 		{
 			InitBalls();
+			InitPowerUps();
 
 			if ((maxBrickLines % 2) == 0)
 			{
@@ -538,7 +655,17 @@ namespace game
 			else
 				maxBrickLines++;
 
+			float totalWidth = abs(mapLimits.x - mapLimits.width);
+
+			player.pallette.rect.x = mapLimits.x + totalWidth / 2;
+			player.pallette.rect.y = mapLimits.y + OffSetSpawnPlayer;
+
+			player.pallette.rect.width = palleteWidth;
+			player.pallette.speed = palleteSpeed;
+
 			InitBricks();
+
+			activeBarrier = false;
 
 			timeAccum = 0;
 		}
@@ -551,7 +678,7 @@ namespace game
 
 
 
-		void AddBalls(int cant)
+		void AddBalls(int cant, float posX, float posY)
 		{
 			int count = cant;
 
@@ -560,6 +687,9 @@ namespace game
 				if (!balls[i].isActive && count > 0)
 				{
 					balls[i].isActive = true;
+					balls[i].cir.x = posX;
+					balls[i].cir.y = posY;
+
 					count--;
 				}
 			}
@@ -579,7 +709,7 @@ namespace game
 			}
 		}
 
-		void AddPower()
+		void AddPower(float posX, float posY)
 		{
 			bool done = true;
 
@@ -589,11 +719,13 @@ namespace game
 			{
 				int indexToActive = GetRandomValue(0, maxPowerUps - 1);
 
-				/*if (!powerUps[indexToActive].isActive)
+				if (!powerUps[indexToActive].isActive)
 				{
 					powerUps[indexToActive].isActive = true;
+					powerUps[indexToActive].rect.x = posX;
+					powerUps[indexToActive].rect.y = posY;
 					done = false;
-				}*/
+				}
 
 				chances--;
 			}

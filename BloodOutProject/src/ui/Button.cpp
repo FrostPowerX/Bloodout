@@ -13,7 +13,7 @@ Button CreateButton(Vector2 position, float width, float height, std::string tex
 	newB.rect.height = height;
 
 	newB.text.text = text;
-	newB.text.font = fontSize;
+	newB.text.fontSize = fontSize;
 	newB.text.color = textColor;
 
 	newB.normalColor = normal;
@@ -35,7 +35,7 @@ Button CreateButton(float x, float y, float width, float height, std::string tex
 	newB.rect.height = height;
 
 	newB.text.text = text;
-	newB.text.font = fontSize;
+	newB.text.fontSize = fontSize;
 	newB.text.color = textColor;
 
 	newB.normalColor = normal;
@@ -105,10 +105,10 @@ bool IsButtonPressed(Button& button)
 
 void SetText(Button& button, std::string text)
 {
-	slSetFontSize(button.text.font);
+	slSetFontSize(button.text.fontSize);
 
 	button.text.position.x = button.rect.x - ((float)slGetTextWidth(button.text.text.c_str()) / 2);
-	button.text.position.y = button.rect.y - (button.text.font / 2);
+	button.text.position.y = button.rect.y - (button.text.fontSize / 2);
 }
 
 void DrawButton(Button button)

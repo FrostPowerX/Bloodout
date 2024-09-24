@@ -1,15 +1,18 @@
 #include "PowerUP.h"
-#include "..\utilities\Constants.h"
 
-PowerUp CreatePowerUp(Rectangle rect, Color rectColor, float heightPlus, float speedPlus, int ballsPlus)
+#include "sl.h"
+#include "Constants.h"
+
+PowerUp CreatePowerUp(Rectangle rect, Color rectColor, float heightPlus, float speedPlus, float secondsInvulnerable, int ballsPlus)
 {
 	PowerUp newPowerUp;
 
 	newPowerUp.rect = rect;
 	newPowerUp.rectColor = rectColor;
-	newPowerUp.addHeight = heightPlus;
+	newPowerUp.addWidth = heightPlus;
 	newPowerUp.addSpeed = speedPlus;
 	newPowerUp.addBalls = ballsPlus;
+	newPowerUp.secondsInvulerable = secondsInvulnerable;
 
 	newPowerUp.toPlayer = -1;
 	newPowerUp.isActive = false;
@@ -17,14 +20,25 @@ PowerUp CreatePowerUp(Rectangle rect, Color rectColor, float heightPlus, float s
 	return newPowerUp;
 }
 
-void DrawPowerUp(PowerUp& pUp)
+void MovePowerUp(PowerUp& p, float dirX, float dirY)
 {
-	Vector3 pos;
-	pos.x = pUp.rect.x + (pUp.rect.width / 2) - (screenWidth / 2);
-	pos.y = 10;
-	pos.z = pUp.rect.y + (pUp.rect.height / 2) - (screenHeight / 2);
+	if (dirX > 1)
+		dirX = 1;
+	else if (dirX < -1)
+		dirX = -1;
 
-	DrawCube(pos, pUp.rect.width, 15, pUp.rect.height, pUp.rectColor);
-	//DrawCubeWires(pos, pUp.rect.width, 15, pUp.rect.height, BLUE);
-	//DrawRectangleRec(pUp.rect, pUp.rectColor);
+	if (dirY > 1)
+		dirY = 1;
+	else if (dirY < -1)
+		dirY = -1;
+
+	p.rect.x += dirX * p.speed * slGetDeltaTime();
+
+	p.rect.y += dirY * p.speed * slGetDeltaTime();
+}
+
+void DrawPowerUp(PowerUp& p)
+{
+	SetForeColor(p.rectColor);
+	slRectangleFill(p.rect.x, p.rect.y, p.rect.width, p.rect.height);
 }

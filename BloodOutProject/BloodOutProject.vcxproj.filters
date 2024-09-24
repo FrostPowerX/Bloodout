@@ -90,6 +90,9 @@
     <ClCompile Include="src\utilities\Brick.cpp">
       <Filter>Archivos de origen\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\PowerUp.cpp">
+      <Filter>Archivos de origen\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameLoop.h">
@@ -150,6 +153,9 @@
       <Filter>Archivos de encabezado\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\utilities\Brick.h">
+      <Filter>Archivos de encabezado\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\PowerUP.h">
       <Filter>Archivos de encabezado\Entities</Filter>
     </ClInclude>
   </ItemGroup>

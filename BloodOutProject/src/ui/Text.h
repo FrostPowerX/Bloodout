@@ -11,12 +11,12 @@ struct Text
 	Vector2 position;
 	std::string text;
 
-	int font = 0;
+	int fontSize = 0;
 
 	Color color;
 };
 
-Text CreateText(std::string text, int x, int y, int font, Color color);
+Text CreateText(std::string text, int x, int y, int fontSize, Color color);
 
 void DrawText(Text text);
 

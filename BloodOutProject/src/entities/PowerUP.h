@@ -1,7 +1,8 @@
 #ifndef POWER_UP
 #define POWER_UP
 
-#include "sl.h"
+#include "Rectangle.h"
+#include "Color.h"
 
 struct PowerUp
 {
@@ -9,8 +10,14 @@ struct PowerUp
 
 	Color rectColor = WHITE;
 
-	float addHeight = 0;
+	float dirX = 0;
+	float dirY = 0;
+
+	float speed = 0;
+
+	float addWidth = 0;
 	float addSpeed = 0;
+	float secondsInvulerable = 0;
 	int addBalls = 0;
 
 	int toPlayer = -1;
@@ -18,7 +25,9 @@ struct PowerUp
 	bool isActive = false;
 };
 
-PowerUp CreatePowerUp(Rectangle rect, Color rectColor, float heightPlus, float speedPlus, int ballsPlus);
+PowerUp CreatePowerUp(Rectangle rect, Color rectColor, float heightPlus, float speedPlus, float secondsInvulerable, int ballsPlus);
+
+void MovePowerUp(PowerUp& p, float dirX, float dirY);
 
 void DrawPowerUp(PowerUp& pUp);
 

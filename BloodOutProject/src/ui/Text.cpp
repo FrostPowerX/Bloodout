@@ -1,7 +1,7 @@
 #include "Text.h"
 #include "sl.h"
 
-Text CreateText(std::string text, int x, int y, int font, Color color)
+Text CreateText(std::string text, int x, int y, int fontSize, Color color)
 {
     Text newText;
 
@@ -10,7 +10,7 @@ Text CreateText(std::string text, int x, int y, int font, Color color)
     newText.position.x = (float)x;
     newText.position.y = (float)y;
 
-    newText.font = font;
+    newText.fontSize = fontSize;
 
     newText.color = color;
 
@@ -20,6 +20,6 @@ Text CreateText(std::string text, int x, int y, int font, Color color)
 void DrawText(Text text)
 {
     SetForeColor(text.color);
-    slSetFontSize(text.font);
+    slSetFontSize(text.fontSize);
     slText(text.position.x, text.position.y, text.text.c_str());
 }

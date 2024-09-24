@@ -17,18 +17,22 @@ float ConvertGradesToRadian(float grades)
 
 bool CheckCollision(Rectangle r1, Rectangle r2)
 {
-	float r1X2 = r1.x + (r1.width / 2);
+	float halfWidthR1 = (r1.width / 2);
+	float halfHeightR1 = (r1.height / 2);
 
-	float r1Y = r1.y + (r1.height / 2);
+	float halfWidthR2 = (r2.width / 2);
+	float halfHeightR2 = (r2.height / 2);
 
-	float r2X2 = r2.x + (r2.width / 2);
+	float distanceX = r1.x - r2.x;
+	float distanceY = r1.y - r2.y;
 
-	float r2Y = r2.y + (r2.height / 2);
+	distanceX = abs(distanceX);
+	distanceY = abs(distanceY);
 
-	return	(r1X2 >= r2.x &&
-		r2X2 >= r1.x &&
-		r1Y >= r2.y &&
-		r2Y >= r1.y);
+	distanceX -= halfWidthR1 + halfWidthR2;
+	distanceY -= halfHeightR1 + halfHeightR2;
+	
+	return (distanceX < 0 && distanceY < 0);
 }
 
 bool CheckCollision(Circle c1, Circle c2)

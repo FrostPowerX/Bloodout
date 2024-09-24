@@ -16,6 +16,7 @@ const int screenHeight = 900;
 const int MaxPlayers = 1;
 const int MaxBalls = 100;
 const int MaxBricks = 500;
+const int maxPowerUps = 18;
 
 const int PalletteWidth = 20;
 const int PalletteHeight = 120;
@@ -27,8 +28,6 @@ const int ButtonsInMenu = 4;
 const int ButtonsInGamePlay = 3;
 
 const int TextsInGamePlay = 6;
-
-const int maxPowerUps = 6;
 
 const float maxBounceAngle = 60.f;
 

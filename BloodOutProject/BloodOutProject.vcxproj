@@ -22,6 +22,7 @@
     <ClCompile Include="src\entities\Ball.cpp" />
     <ClCompile Include="src\entities\Pallette.cpp" />
     <ClCompile Include="src\entities\Player.cpp" />
+    <ClCompile Include="src\entities\PowerUp.cpp" />
     <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scenes\SceneControls.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\entities\Ball.h" />
     <ClInclude Include="src\entities\Pallette.h" />
     <ClInclude Include="src\entities\Player.h" />
+    <ClInclude Include="src\entities\PowerUP.h" />
     <ClInclude Include="src\GameLoop.h" />
     <ClInclude Include="src\scenes\SceneControls.h" />
     <ClInclude Include="src\scenes\SceneCredits.h" />
