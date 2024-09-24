@@ -563,7 +563,10 @@ namespace game
 						TakeDamage(bricks[j].health, 1.f);
 						AddScore(player, 10);
 
-						AddPower(bricks[j].rect.x, bricks[j].rect.y);
+						int rand = GetRandomValue(0, 3);
+
+						if (rand == 1)
+							AddPower(bricks[j].rect.x, bricks[j].rect.y);
 					}
 
 				}
