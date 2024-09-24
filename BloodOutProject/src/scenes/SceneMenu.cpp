@@ -29,6 +29,8 @@ namespace game
 
 		Panel gameNamePanel;
 
+		Text text;
+
 		void Init()
 		{
 			float buttonWidth = 200;
@@ -53,7 +55,7 @@ namespace game
 			rect.x = (screenWidth / 2);
 			rect.y = (screenHeight / 4);
 
-			gameNamePanel = CreatePanel(rect, GameName, 10, 10, 10, 10, 90, WHITE, YELLOW);
+			gameNamePanel = CreatePanel(rect, GameName, 10, 10, 10, 10, 90, BLACK, RED);
 
 			for (int i = 0; i < ButtonsInMenu; i++)
 			{
@@ -62,8 +64,14 @@ namespace game
 
 				tempPos.y -= (i * buttonHeight) + (buttonsOffset * (i + 1));
 
-				buttons[i] = CreateButton(tempPos, buttonWidth, buttonHeight, namesButtons[i], 20, GREEN, RED, BLUE, YELLOW);
+				buttons[i] = CreateButton(tempPos, buttonWidth, buttonHeight, namesButtons[i], 30, RED, GRAY, BLUE, CYAN);
 			}
+
+			text.color = GRAY_TRANSPARENT;
+			text.text = "Press ESC to exit";
+			text.position.x = 50;
+			text.position.y = 50;
+			text.fontSize = 20;
 		}
 
 		void Input()
@@ -112,6 +120,7 @@ namespace game
 			}
 
 			DrawPanel(gameNamePanel);
+			DrawText(text);
 		}
 	}
 }

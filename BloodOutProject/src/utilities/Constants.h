@@ -14,8 +14,8 @@ const int screenWidth = 800;
 const int screenHeight = 900;
 
 const int MaxPlayers = 1;
-const int MaxBalls = 100;
-const int MaxBricks = 500;
+const int MaxBalls = 5000;
+const int MaxBricks = 5000;
 const int maxPowerUps = 18;
 
 const int PalletteWidth = 20;

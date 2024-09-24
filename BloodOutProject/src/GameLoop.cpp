@@ -50,6 +50,7 @@ namespace game
 		{
 			slWindow(screenWidth, screenHeight, "Cacho", false);
 			slLoadFont((fontDir + "ChainsawCarnage.ttf").c_str());
+			slLoadFont((fontDir + "Aerial.ttf").c_str());
 			slSetFont(0, 15);
 
 			menu::Init();

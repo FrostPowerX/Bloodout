@@ -29,8 +29,11 @@ namespace game
 			EXIT
 		};
 
+		const int infoTextsCount = 12;
+
 		Button buttons[ButtonsInGamePlay];
 		Text infoText[TextsInGamePlay];
+		std::string texts[infoTextsCount];
 
 		Button buttonEndGame;
 
@@ -40,6 +43,10 @@ namespace game
 		Ball balls[MaxBalls];
 		Brick bricks[MaxBricks];
 		PowerUp powerUps[maxPowerUps];
+
+		Text infoTexts[infoTextsCount];
+		Text endGameTxt;
+		Text scoreEndGameTxt;
 
 		Player player;
 
@@ -61,6 +68,11 @@ namespace game
 		float timeAccum;
 		float timeActiveBarrier;
 
+		int sizeP;
+		int powerUpsUsed;
+		int activeBalls;
+		int round;
+
 		bool activeBarrier;
 
 		bool endGameMenu;
@@ -71,6 +83,7 @@ namespace game
 		void InitMap();
 		void InitBarrier();
 		void InitUI();
+		void InitTexts();
 		void InitPlayers();
 		void InitBalls();
 		void InitBricks();
@@ -78,12 +91,15 @@ namespace game
 
 		void PlayersInputs();
 
+		void UpdateUI();
 		void MoveObjects();
 		void CheckAllCollisions();
+		void UpdateInfoTexts();
 		void LoseCondition();
 		void RoundPassCondition();
 
 		void DrawUI();
+		void DrawTexts();
 		void DrawPlayers();
 		void DrawBalls();
 		void DrawBricks();
@@ -118,7 +134,7 @@ namespace game
 			palleteHeight = 10.f;
 			palleteSpeed = 300.f;
 
-			ballRadius = 5.f;
+			ballRadius = 8.f;
 			ballSpeed = 500.f;
 
 			brickWidth = 50;
@@ -136,6 +152,11 @@ namespace game
 			InitBalls();
 			InitBricks();
 			InitPowerUps();
+
+			sizeP = player.pallette.rect.width;
+			powerUpsUsed = 0;
+			activeBalls = 1;
+			round = 1;
 		}
 
 		void Input()
@@ -152,47 +173,10 @@ namespace game
 
 		void Update()
 		{
+			UpdateUI();
+
 			if (pauseGame || endGameMenu)
-			{
-				if (endGameMenu)
-				{
-					if (MouseOnTopButton(buttonEndGame))
-						if (IsButtonPressed(buttonEndGame))
-						{
-							gameLoop::currentScene = gameLoop::SCENE::MENU;
-							RestartGame();
-						}
-				}
-				else
-				{
-					for (int i = 0; i < ButtonsInGamePlay; i++)
-					{
-						if (MouseOnTopButton(buttons[i]))
-							if (IsButtonPressed(buttons[i]))
-							{
-								switch (MENU_PAUSE(i))
-								{
-								case MENU_PAUSE::CONTINUE:
-									pauseGame = !pauseGame;
-									break;
-
-								case MENU_PAUSE::MAIN_MENU:
-									gameLoop::currentScene = gameLoop::SCENE::MENU;
-									RestartGame();
-									break;
-
-								case MENU_PAUSE::EXIT:
-									gameLoop::programLoop = false;
-									break;
-
-								default:
-									break;
-								}
-							}
-					}
-				}
 				return;
-			}
 
 			if (timeAccum >= timeActiveBarrier)
 			{
@@ -214,6 +198,8 @@ namespace game
 			if (balls[0].freeze)
 				TeleportBall(balls[0], player.pallette.rect.x, player.pallette.rect.y + balls[0].cir.radius + (palleteHeight / 2));
 
+			UpdateInfoTexts();
+
 			MoveObjects();
 
 			CheckAllCollisions();
@@ -231,6 +217,7 @@ namespace game
 			DrawBarrier();
 			DrawMap();
 
+			DrawTexts();
 			DrawUI();
 		}
 
@@ -277,19 +264,68 @@ namespace game
 			{
 				buttonPos.y -= (i * buttonHeight) + 25;
 
-				buttons[i] = CreateButton(buttonPos, buttonWidth, buttonHeight, namesButtons[i], 25, GREEN, RED, BLUE, YELLOW);
+				buttons[i] = CreateButton(buttonPos, buttonWidth, buttonHeight, namesButtons[i], 25, RED, GRAY, BLUE, CYAN);
 			}
 
-			buttonEndGame = CreateButton(buttonPos, buttonWidth, buttonHeight, "Menu", 25, GREEN, RED, BLUE, YELLOW);
+			buttonEndGame = CreateButton(buttonPos, buttonWidth, buttonHeight, "Menu", 25, RED, GRAY, BLUE, CYAN);
 
 			// infoTexts
 
+			InitTexts();
+		}
 
+		void InitTexts()
+		{
+			int offSetTxt = 10;
+			int fontSize = 16;
+
+			Vector2 position;
+			position.x = offSetTxt;
+			position.y = screenHeight;
+
+			texts[0] = "Lives: ";
+			texts[1] = "Score: ";
+			texts[2] = "Level: ";
+			texts[3] = "Used PowerUps: ";
+			texts[4] = "Active balls: ";
+			texts[5] = "Movement: Left \"A\", Right \"D\"";
+			texts[6] = "Shoot: \"W\"";
+			texts[7] = "Menu / Pause: \"ESC\"";
+			texts[8] = "PowerUp Speed: \"COLOR\"";
+			texts[9] = "PowerUp Barrier: \"COLOR\"";
+			texts[10] = "PowerUp Size: \"COLOR\"";
+			texts[11] = "PowerUp Balls: \"COLOR\"";
+
+			for (int i = 0; i < infoTextsCount; i++)
+			{
+				position.y -= slGetTextHeight(texts[i].c_str()) + offSetTxt;
+				infoTexts[i] = CreateText(texts[i], position.x, position.y, fontSize, GRAY);
+			}
+
+			fontSize = 20;
+			position.x = screenWidth / 2;
+
+			slSetFontSize(fontSize * 6);
+			std::string txtEndgame = "You Lose";
+			position.x -= slGetTextWidth(txtEndgame.c_str()) / 2;
+			position.y = screenHeight - slGetTextHeight(txtEndgame.c_str()) - fontSize;
+			endGameTxt = CreateText(txtEndgame, position.x, position.y, fontSize * 6, BOARD);
+
+			slSetFontSize(fontSize);
+			std::string scoreEndGame = "Max Score: ";
+			position.x = (screenWidth / 2) - slGetTextWidth(scoreEndGame.c_str()) * 2;
+			position.y -= slGetTextHeight(scoreEndGame.c_str()) + fontSize;
+			scoreEndGameTxt = CreateText(scoreEndGame, position.x, position.y, fontSize, GREEN);
 		}
 
 		void InitPlayers()
 		{
-			Pallette pallette = CreatePallette(Vector2{ screenWidth / 2, OffSetSpawnPlayer }, RED, palleteWidth, palleteHeight, palleteSpeed);
+			float totalWidth = abs(mapLimits.x - mapLimits.width);
+
+			float halfMapW = mapLimits.x + totalWidth / 2;
+			float halfMapH = mapLimits.y + OffSetSpawnPlayer;
+
+			Pallette pallette = CreatePallette(Vector2{ halfMapW, halfMapH }, RED, palleteWidth, palleteHeight, palleteSpeed);
 
 			player = CreatePlayer(pallette, 3.f, 0, 1);
 		}
@@ -313,7 +349,7 @@ namespace game
 			rect.x = brickStartPosX;
 			rect.y = brickStartPosY;
 
-			float health = 1.f;
+			float health = maxBrickHealth;
 
 			int maxLines = 0;
 			int bricksPerLine = 0;
@@ -341,7 +377,6 @@ namespace game
 			for (int i = 0; i < maxLines - 1; i++)
 			{
 				int additional = actualBrick;
-				health += (health < maxBrickHealth) ? 1.f : 0.f;
 
 				for (int j = 0; j < bricksPerLine - 1; j++)
 				{
@@ -400,6 +435,67 @@ namespace game
 			if (GetKeyDown('W'))
 				if (balls[0].freeze)
 					SetFreeze(balls[0], false);
+
+#ifndef NDEBUG
+
+			if (GetKeyDown('R'))
+				activeBarrier = !activeBarrier;
+
+			if (GetKeyDown('E'))
+				Heal(player.health, 3.f);
+
+			if (GetKeyPress('Q'))
+				AddBalls(5, balls[0].cir.x, balls[0].cir.y);
+
+			if (GetKeyPress('T'))
+				RestartRound();
+
+#endif
+		}
+
+		void UpdateUI()
+		{
+			if (pauseGame || endGameMenu)
+			{
+				if (endGameMenu)
+				{
+					if (MouseOnTopButton(buttonEndGame))
+						if (IsButtonPressed(buttonEndGame))
+						{
+							gameLoop::currentScene = gameLoop::SCENE::MENU;
+							RestartGame();
+						}
+				}
+				else
+				{
+					for (int i = 0; i < ButtonsInGamePlay; i++)
+					{
+						if (MouseOnTopButton(buttons[i]))
+							if (IsButtonPressed(buttons[i]))
+							{
+								switch (MENU_PAUSE(i))
+								{
+								case MENU_PAUSE::CONTINUE:
+									pauseGame = !pauseGame;
+									break;
+
+								case MENU_PAUSE::MAIN_MENU:
+									gameLoop::currentScene = gameLoop::SCENE::MENU;
+									RestartGame();
+									break;
+
+								case MENU_PAUSE::EXIT:
+									gameLoop::programLoop = false;
+									break;
+
+								default:
+									break;
+								}
+							}
+					}
+				}
+				return;
+			}
 		}
 
 		void MoveObjects()
@@ -492,12 +588,13 @@ namespace game
 			if (CheckBorderCollision(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
 				SolveCollisionMap(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
 
-			// Collisions PowerUp with Player
+			// Collisions PowerUp
 			for (int i = 0; i < maxPowerUps; i++)
 			{
 				if (!powerUps[i].isActive)
 					continue;
 
+				// With player
 				if (CheckCollision(player.pallette.rect, powerUps[i].rect))
 				{
 					for (int j = 0; j < MaxBalls; j++)
@@ -509,8 +606,8 @@ namespace game
 						}
 					}
 
-					player.pallette.rect.width += powerUps[i].addWidth;
-					player.pallette.speed += powerUps[i].addSpeed;
+					player.pallette.rect.width += (player.pallette.rect.width + powerUps[i].addWidth < palleteWidth * 3) ? powerUps[i].addWidth : 0;
+					player.pallette.speed += (player.pallette.speed + powerUps[i].addSpeed < PalletSpeed * 3) ? powerUps[i].addSpeed : 0;
 
 					if (powerUps[i].secondsInvulerable > 0)
 					{
@@ -519,9 +616,24 @@ namespace game
 						activeBarrier = true;
 					}
 
+					powerUpsUsed++;
+
 					powerUps[i].isActive = false;
 				}
+
+				// With map
+				if (CheckBorderCollision(powerUps[i].rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
+					powerUps[i].isActive = false;
 			}
+		}
+
+		void UpdateInfoTexts()
+		{
+			infoTexts[0].text = texts[0] + to_string((int)player.health.currentHealth);
+			infoTexts[1].text = texts[1] + to_string(player.score);
+			infoTexts[2].text = texts[2] + to_string(round);
+			infoTexts[3].text = texts[3] + to_string(powerUpsUsed);
+			infoTexts[4].text = texts[4] + to_string(activeBalls);
 		}
 
 		void LoseCondition()
@@ -534,14 +646,19 @@ namespace game
 					ballsActive++;
 			}
 
+			activeBalls = ballsActive;
+
 			if (ballsActive <= 0)
 			{
 				TakeDamage(player.health, 1.f);
 				InitBalls();
 			}
 
-			if (!IsAlive(player.health))
+			if (!IsAlive(player.health) && !endGameMenu)
+			{
+				scoreEndGameTxt.text += to_string(player.score);
 				endGameMenu = true;
+			}
 		}
 
 		void RoundPassCondition()
@@ -568,6 +685,15 @@ namespace game
 			{
 				if (endGameMenu)
 				{
+					SetForeColor(BLACK_TRANSPARENT);
+					slRectangleFill(screenWidth / 2, screenHeight / 2, screenWidth, screenHeight);
+
+					DrawText(endGameTxt);
+
+					slSetFont(1, 15);
+					DrawText(scoreEndGameTxt);
+					slSetFont(0, 15);
+
 					DrawButton(buttonEndGame);
 				}
 				else
@@ -578,6 +704,18 @@ namespace game
 					}
 				}
 			}
+		}
+
+		void DrawTexts()
+		{
+			slSetFont(1, infoTexts[0].fontSize);
+
+			for (int i = 0; i < infoTextsCount; i++)
+			{
+				DrawText(infoTexts[i]);
+			}
+
+			slSetFont(0, infoTexts[0].fontSize);
 		}
 
 		void DrawPlayers()
@@ -644,16 +782,13 @@ namespace game
 			InitBalls();
 			InitPowerUps();
 
-			if ((maxBrickLines % 2) == 0)
+			maxBrickHealth += 1.f;
+
+			if (round % 3 == 0 && round < 42)
 			{
-				maxBrickHealth++;
-			}
-			else if (maxBrickLines % 3 == 0)
-			{
-				maxBrickLines--;
-			}
-			else
 				maxBrickLines++;
+				maxBrickHealth = 1.f;
+			}
 
 			float totalWidth = abs(mapLimits.x - mapLimits.width);
 
@@ -668,11 +803,17 @@ namespace game
 			activeBarrier = false;
 
 			timeAccum = 0;
+			round++;
 		}
 
 		void RestartGame()
 		{
 			Init();
+			for (int i = 0; i < MaxBricks; i++)
+			{
+				bricks[i].isActive = false;
+			}
+
 			firstScreen = true;
 		}
 

@@ -10,14 +10,17 @@ struct Color
 	double a = 0;
 };
 
-const Color WHITE = Color{ 1,1,1,1 };
-const Color BLACK = Color{ 0,0,0,1 };
-const Color RED = Color{ 1,0,0,1 };
-const Color GREEN = Color{ 0,1,0,1 };
-const Color BLUE = Color{ 0,0,1,1 };
-const Color YELLOW = Color{ 0,0.5,0.5,1 };
-const Color GRAY = Color{ 0.5,0.5,0.5,1 };
-const Color GRAY_TRANSPARENT = Color{ 0.5,0.5,0.5,0.4 };
+const Color WHITE = Color{ 1.f,1.f,1.f,1.f };
+const Color BLACK = Color{ 0.f,0.f,0.f,1.f };
+const Color BLACK_TRANSPARENT = Color{ 0.f,0.f,0.f,0.8f };
+const Color RED = Color{ 1.f,0.f,0.f,1.f };
+const Color BOARD = Color{ 0.6f,0.f,0.f,1.f };
+const Color GREEN = Color{ 0.f,1.f,0.f,1.f };
+const Color BLUE = Color{ 0.f,0.f,1.f,1.f };
+const Color CYAN = Color{ 0.f,0.5f,0.5f,1.f };
+const Color YELLOW = Color{ 0.5f,0.5f,0.0f,1.f };
+const Color GRAY = Color{ 0.5f,0.5f,0.5f,1 };
+const Color GRAY_TRANSPARENT = Color{ 0.5f,0.5f,0.5f,0.4f };
 
 void SetBackColor(Color color);
 void SetForeColor(Color color);

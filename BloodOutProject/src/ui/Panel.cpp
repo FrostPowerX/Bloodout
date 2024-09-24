@@ -22,10 +22,10 @@ Panel CreatePanel(Rectangle rect, string text, float minOffSetX, float maxOffSet
     slSetFontSize(newP.text.fontSize);
 
     newP.rect.width = newP.minOffSetX + newP.maxOffSetX + slGetTextWidth(newP.text.text.c_str());
-    newP.rect.height = newP.minOffSetY + newP.maxOffSetY + newP.text.fontSize;
+    newP.rect.height = newP.minOffSetY + newP.maxOffSetY + slGetTextHeight(newP.text.text.c_str());
     
     newP.text.position.x = newP.rect.x + newP.minOffSetX - (slGetTextWidth(newP.text.text.c_str()) / 2);
-    newP.text.position.y = newP.rect.y + newP.minOffSetY - (newP.text.fontSize / 2);
+    newP.text.position.y = newP.rect.y + newP.minOffSetY - (slGetTextHeight(newP.text.text.c_str()) / 2);
 
     return newP;
 }

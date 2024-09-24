@@ -13,17 +13,14 @@ Ball CreateBall(Color color, float x, float y, float radius, float speed)
 
 	newBall.color = color;
 	newBall.speed = speed;
-	
-	newBall.dirX = (GetRandomValue(-100, 100) / 100.f);
-	newBall.dirY = (GetRandomValue(-100, 100) / 100.f);
 
-	float angle = atan2(newBall.dirY, newBall.dirX);
+	float angle = ConvertGradesToRadian((GetRandomValue(450,1320) / 10.f));
 
-	float minAngleUp = ConvertGradesToRadian(22.5f);
-	float maxAngleUp = ConvertGradesToRadian(157.5f);
+	//float minAngleUp = ConvertGradesToRadian(45.f);
+	//float maxAngleUp = ConvertGradesToRadian(132.f);
 
-	if (angle < minAngleUp && angle > maxAngleUp)
-		angle = (angle > maxAngleUp) ? maxAngleUp : minAngleUp;
+	//if (angle < minAngleUp && angle > maxAngleUp)
+	//	angle = (angle > maxAngleUp) ? maxAngleUp : minAngleUp;
 
 	newBall.dirX = cos(angle);
 	newBall.dirY = sin(angle);

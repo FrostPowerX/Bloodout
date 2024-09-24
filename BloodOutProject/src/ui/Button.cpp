@@ -108,7 +108,7 @@ void SetText(Button& button, std::string text)
 	slSetFontSize(button.text.fontSize);
 
 	button.text.position.x = button.rect.x - ((float)slGetTextWidth(button.text.text.c_str()) / 2);
-	button.text.position.y = button.rect.y - (button.text.fontSize / 2);
+	button.text.position.y = button.rect.y - ((float)slGetTextHeight(button.text.text.c_str()) / 2);
 }
 
 void DrawButton(Button button)
