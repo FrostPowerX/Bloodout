@@ -10,6 +10,7 @@
 
 #include "Pallette.h"
 #include "Ball.h"
+#include "Brick.h"
 #include "PowerUp.h"
 #include "Player.h"
 
@@ -36,6 +37,8 @@ namespace game
 		Rectangle mapLimits;
 
 		Ball balls[MaxBalls];
+		Brick bricks[MaxBricks];
+
 		Player player;
 
 		float palleteWidth;
@@ -45,6 +48,14 @@ namespace game
 		float ballRadius;
 		float ballSpeed;
 
+		float brickWidth;
+		float brickHeight;
+		int brickStartPosX;
+		int brickStartPosY;
+
+		float maxBrickHealth;
+		int maxBrickLines;
+
 		float timeAccum;
 		float timeUpDiff;
 
@@ -53,8 +64,40 @@ namespace game
 
 		bool firstScreen;
 
+		void InitMap();
+		void InitUI();
+		void InitPlayers();
+		void InitBalls();
+		void InitBricks();
+		void InitPowerUps();
+
+		void PlayersInputs();
+
+		void MoveObjects();
+		void CheckAllCollisions();
+		void LoseCondition();
+		void RoundPassCondition();
+
+		void DrawUI();
+		void DrawPlayers();
+		void DrawBalls();
+		void DrawBricks();
+		void DrawPowerUps();
+		void DrawMap();
+
+		void RestartRound();
+		void RestartGame();
+
+		void AddBalls(int cant);
+		void RemoveBalls(int cant);
+		void AddPower();
+
+
+
 		void Init()
 		{
+			InitMap();
+
 			pauseGame = false;
 			endGameMenu = false;
 
@@ -71,14 +114,19 @@ namespace game
 			ballRadius = 5.f;
 			ballSpeed = 500.f;
 
-			InitMap();
+			brickWidth = 50;
+			brickHeight = 25;
+			brickStartPosX = mapLimits.x + (brickWidth / 2) + OffSetSpawnBrick;
+			brickStartPosY = (mapLimits.height / 2) - (brickHeight / 2) - OffSetSpawnBrick;
+
+			maxBrickLines = 1;
+			maxBrickHealth = 1;
 
 			InitUI();
 
 			InitPlayers();
-
 			InitBalls();
-
+			InitBricks();
 			InitPowerUps();
 		}
 
@@ -145,18 +193,33 @@ namespace game
 			else
 				timeAccum += slGetDeltaTime();
 
+			for (int i = 0; i < MaxBricks; i++)
+			{
+				if (!bricks[i].isActive)
+					continue;
+
+				if (!IsAlive(bricks[i].health))
+					bricks[i].isActive = false;
+			}
+
+			if (balls[0].freeze)
+				TeleportBall(balls[0], player.pallette.rect.x, player.pallette.rect.y + balls[0].cir.radius + (palleteHeight / 2));
+
 			MoveObjects();
 
 			CheckAllCollisions();
 
-			CheckVictoryCondition();
+			LoseCondition();
+			RoundPassCondition();
 		}
 
 		void Draw()
 		{
 			DrawPlayers();
 			DrawBalls();
+			DrawBricks();
 			DrawPowerUps();
+			DrawMap();
 
 			DrawUI();
 		}
@@ -165,7 +228,7 @@ namespace game
 
 		void InitMap()
 		{
-			mapLimits.x = screenWidth / 2;
+			mapLimits.x = screenWidth / 3;
 			mapLimits.y = 0;
 			mapLimits.width = screenWidth;
 			mapLimits.height = screenHeight;
@@ -203,7 +266,7 @@ namespace game
 
 		void InitPlayers()
 		{
-			Pallette pallette = CreatePallette(Vector2{ screenWidth / 2, OffSetSpawn }, RED, palleteWidth, palleteHeight, palleteSpeed);
+			Pallette pallette = CreatePallette(Vector2{ screenWidth / 2, OffSetSpawnPlayer }, RED, palleteWidth, palleteHeight, palleteSpeed);
 
 			player = CreatePlayer(pallette, 3.f, 0, 1);
 		}
@@ -214,7 +277,63 @@ namespace game
 			{
 				balls[i] = CreateBall(GRAY, player.pallette.rect.x, player.pallette.rect.y + ballRadius, ballRadius, ballSpeed);
 			}
+
 			balls[0].isActive = true;
+			SetFreeze(balls[0], true);
+		}
+
+		void InitBricks()
+		{
+			Rectangle rect;
+			rect.width = brickWidth;
+			rect.height = brickHeight;
+			rect.x = brickStartPosX;
+			rect.y = brickStartPosY;
+
+			float health = 1.f;
+
+			int maxLines = 0;
+			int bricksPerLine = 0;
+
+			float totalWidth = abs(mapLimits.x - mapLimits.width);
+			float totalHeight = abs(mapLimits.y - mapLimits.height) / 2;
+
+			float useWidth = 0;
+			float useHeight = 0;
+
+			int actualBrick = 0;
+
+			while (useWidth < totalWidth)
+			{
+				useWidth += brickWidth + OffSetSpawnBrick;
+				bricksPerLine++;
+			}
+
+			while (useHeight < totalHeight && maxLines <= maxBrickLines)
+			{
+				useHeight += brickHeight + OffSetSpawnBrick;
+				maxLines++;
+			}
+
+			for (int i = 0; i < maxLines - 1; i++)
+			{
+				int additional = actualBrick;
+				health += (health < maxBrickHealth) ? 1.f : 0.f;
+
+				for (int j = 0; j < bricksPerLine - 1; j++)
+				{
+					bricks[additional + j] = CreateBrick(rect, health, GREEN, BLUE, RED);
+
+					rect.x += brickWidth + OffSetSpawnBrick;
+					bricks[additional + j].isActive = true;
+
+					actualBrick++;
+				}
+
+				rect.x = brickStartPosX;
+				rect.y += brickHeight + OffSetSpawnBrick;
+			}
+
 		}
 
 		void InitPowerUps()
@@ -231,6 +350,10 @@ namespace game
 
 			if (GetKeyPress('D'))
 				MovePallette(player.pallette, 1, 0);
+
+			if (GetKeyDown('W'))
+				if (balls[0].freeze)
+					SetFreeze(balls[0], false);
 		}
 
 		void MoveObjects()
@@ -246,26 +369,61 @@ namespace game
 
 		void CheckAllCollisions()
 		{
+			// Collisions Balls
 			for (int i = 0; i < MaxBalls; i++)
 			{
 				if (!balls[i].isActive)
 					continue;
 
+				// Collision with Bricks
+				for (int j = 0; j < MaxBricks; j++)
+				{
+					if (!bricks[j].isActive)
+						continue;
+
+					if (CheckCollision(balls[i].cir, bricks[j].rect))
+					{
+						switch (SolveCollision(balls[i].cir, bricks[j].rect))
+						{
+						case TYPE_PENETRATION::HORIZONTAL:
+							balls[i].dirX *= -1;
+							break;
+
+						case TYPE_PENETRATION::VERTICAL:
+							balls[i].dirY *= -1;
+							break;
+						}
+
+						TakeDamage(bricks[j].health, 1.f);
+						AddScore(player, 10);
+					}
+
+				}
+
+				// Collisions with Player
 				if (CheckCollision(balls[i].cir, player.pallette.rect))
 				{
 					SolveCollision(balls[i].cir, player.pallette.rect);
 					BouncingAngle(balls[i], player.pallette.rect);
 				}
 
+				// Collisions with map
 				if (CheckBorderCollision(balls[i].cir, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
-					SolveCollisionMap(balls[i], mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
+					switch (SolveCollisionMap(balls[i], mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
+					{
+					case TYPE_PENETRATION::VERTICAL:
+						if (balls[i].cir.y < mapLimits.height)
+							balls[i].isActive = false;
+						break;
+					}
 			}
 
+			// Collisions Player with map
 			if (CheckBorderCollision(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y))
 				SolveCollisionMap(player.pallette.rect, mapLimits.width, mapLimits.x, mapLimits.height, mapLimits.y);
 		}
 
-		void CheckVictoryCondition()
+		void LoseCondition()
 		{
 			int ballsActive = 0;
 
@@ -276,13 +434,32 @@ namespace game
 			}
 
 			if (ballsActive <= 0)
+			{
+				TakeDamage(player.health, 1.f);
+				InitBalls();
+			}
+
+			if (!IsAlive(player.health))
 				endGameMenu = true;
 		}
 
-		void PeriodicEvent()
+		void RoundPassCondition()
 		{
+			int count = 0;
 
+			for (int i = 0; i < MaxBricks; i++)
+			{
+				if (!bricks[i].isActive)
+					continue;
+
+				count++;
+			}
+
+			if (count <= 0)
+				RestartRound();
 		}
+
+
 
 		void DrawUI()
 		{
@@ -316,15 +493,52 @@ namespace game
 			}
 		}
 
+		void DrawBricks()
+		{
+			for (int i = 0; i < MaxBricks; i++)
+			{
+				if (!bricks[i].isActive)
+					continue;
+
+				DrawBrick(bricks[i]);
+			}
+		}
+
 		void DrawPowerUps()
 		{
 
 		}
 
+		void DrawMap()
+		{
+			float mapWidth = abs(mapLimits.x - mapLimits.width);
+			float mapHeight = abs(mapLimits.y - mapLimits.height);
+
+			int mapCenterX = mapLimits.x + (mapWidth / 2);
+			int mapCenterY = mapLimits.y + (mapHeight / 2);
+
+			SetForeColor(WHITE);
+			slRectangleOutline(mapCenterX, mapCenterY, mapWidth, mapHeight);
+		}
+
+
+
 		void RestartRound()
 		{
 			InitBalls();
-			InitPlayers();
+
+			if ((maxBrickLines % 2) == 0)
+			{
+				maxBrickHealth++;
+			}
+			else if (maxBrickLines % 3 == 0)
+			{
+				maxBrickLines--;
+			}
+			else
+				maxBrickLines++;
+
+			InitBricks();
 
 			timeAccum = 0;
 		}
@@ -334,6 +548,8 @@ namespace game
 			Init();
 			firstScreen = true;
 		}
+
+
 
 		void AddBalls(int cant)
 		{

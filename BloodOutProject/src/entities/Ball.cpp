@@ -45,6 +45,9 @@ void TeleportBall(Ball& ball, float x, float y)
 
 void MoveBall(Ball& ball)
 {
+	if (ball.freeze)
+		return;
+
 	if (ball.dirX > 1)
 		ball.dirX = 1;
 	else if (ball.dirX < -1)
@@ -72,6 +75,11 @@ void ChangeRadiusBall(Ball& circle, float newRadius)
 void ChangeBallSpeed(Ball& ball, float speed)
 {
 	ball.speed = speed;
+}
+
+void SetFreeze(Ball& ball, bool freeze)
+{
+	ball.freeze = freeze;
 }
 
 void DrawBall(Ball& ball)

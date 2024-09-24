@@ -17,6 +17,7 @@ struct Ball
 
 	int playerId = -1;
 
+	bool freeze = false;
 	bool isActive = false;
 };
 
@@ -31,6 +32,8 @@ void ChangeColorBall(Ball& ball, Color color);
 void ChangeRadiusBall(Ball& ball, float radius);
 
 void ChangeBallSpeed(Ball& ball, float speed);
+
+void SetFreeze(Ball& ball, bool freeze);
 
 void DrawBall(Ball& ball);
 
