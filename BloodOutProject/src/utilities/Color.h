@@ -20,7 +20,7 @@ const Color BLUE = Color{ 0.f,0.f,1.f,1.f };
 const Color CYAN = Color{ 0.f,0.5f,0.5f,1.f };
 const Color YELLOW = Color{ 0.5f,0.5f,0.0f,1.f };
 const Color GRAY = Color{ 0.5f,0.5f,0.5f,1 };
-const Color GRAY_TRANSPARENT = Color{ 0.5f,0.5f,0.5f,0.4f };
+const Color GRAY_TRANSPARENT = Color{ 0.5f,0.5f,0.5f,0.6f };
 
 void SetBackColor(Color color);
 void SetForeColor(Color color);

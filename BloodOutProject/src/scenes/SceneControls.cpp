@@ -42,7 +42,7 @@ namespace game
 			text.text = "Press ESC to return";
 			text.position.x = 50;
 			text.position.y = 50;
-			text.fontSize = 20;
+			text.fontSize = 10;
 		}
 
 		void Input()
@@ -66,7 +66,9 @@ namespace game
 				DrawPanel(creditsContent[i]);
 			}
 
+			slSetFont(1, 0);
 			DrawText(text);
+			slSetFont(0, 0);
 		}
 	}
 }

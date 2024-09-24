@@ -299,8 +299,24 @@ namespace game
 			for (int i = 0; i < infoTextsCount; i++)
 			{
 				position.y -= slGetTextHeight(texts[i].c_str()) + offSetTxt;
+				if (i == infoTextsCount - 4)
+					position.y -= offSetTxt * 2;
+
+				if (i == 3)
+					position.y -= offSetTxt * 2;
+
 				infoTexts[i] = CreateText(texts[i], position.x, position.y, fontSize, GRAY);
 			}
+
+			infoTexts[0].color = RED;
+			infoTexts[1].color = GREEN;
+			infoTexts[2].color = GREEN;
+
+
+			infoTexts[8].color = CYAN;
+			infoTexts[9].color = GREEN;
+			infoTexts[10].color = GRAY;
+			infoTexts[11].color = YELLOW;
 
 			fontSize = 20;
 			position.x = screenWidth / 2;
@@ -403,18 +419,18 @@ namespace game
 			rect.height = 20;
 
 			int count = 0;
-			int powersPerType = 5;
+			int powersPerType = 10;
 
 			for (int i = 0; i < maxPowerUps; i++)
 			{
 				if (count < powersPerType)
-					powerUps[i] = CreatePowerUp(rect, WHITE, 10, 0, 0, 0);
+					powerUps[i] = CreatePowerUp(rect, GRAY, 10, 0, 0, 0);
 				else if (count < powersPerType * 2)
-					powerUps[i] = CreatePowerUp(rect, WHITE, 0, 25, 0, 0);
+					powerUps[i] = CreatePowerUp(rect, CYAN, 0, 25, 0, 0);
 				else if (count < powersPerType * 3)
-					powerUps[i] = CreatePowerUp(rect, WHITE, 0, 0, 0, 2);
+					powerUps[i] = CreatePowerUp(rect, YELLOW, 0, 0, 0, 2);
 				else if (count < powersPerType * 4)
-					powerUps[i] = CreatePowerUp(rect, WHITE, 0, 0, 10.f, 0);
+					powerUps[i] = CreatePowerUp(rect, GREEN, 0, 0, 10.f, 0);
 
 				powerUps[i].speed = 300;
 

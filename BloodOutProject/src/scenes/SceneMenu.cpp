@@ -71,7 +71,7 @@ namespace game
 			text.text = "Press ESC to exit";
 			text.position.x = 50;
 			text.position.y = 50;
-			text.fontSize = 20;
+			text.fontSize = 10;
 		}
 
 		void Input()
@@ -120,7 +120,9 @@ namespace game
 			}
 
 			DrawPanel(gameNamePanel);
+			slSetFont(1, 0);
 			DrawText(text);
+			slSetFont(0, 0);
 		}
 	}
 }

@@ -16,7 +16,7 @@ const int screenHeight = 900;
 const int MaxPlayers = 1;
 const int MaxBalls = 5000;
 const int MaxBricks = 5000;
-const int maxPowerUps = 18;
+const int maxPowerUps = 42;
 
 const int PalletteWidth = 20;
 const int PalletteHeight = 120;

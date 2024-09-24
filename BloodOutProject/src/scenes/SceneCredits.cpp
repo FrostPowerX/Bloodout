@@ -13,7 +13,7 @@ namespace game
 	{
 		using namespace gameLoop;
 
-		const int maxLines = 6;
+		const int maxLines = 8;
 
 		Panel creditsContent[maxLines];
 		Vector2 textPos;
@@ -35,18 +35,23 @@ namespace game
 			rect.y -= creditsContent[1].rect.height;
 			creditsContent[2] = CreatePanel(rect, "Emanuel Parajon", 10, 10, 10, 10, 40, BLACK, BOARD);
 			rect.y -= creditsContent[2].rect.height * 2;
+
+			creditsContent[3] = CreatePanel(rect, "FONT", 10, 10, 10, 10, 60, BLACK, RED);
+			rect.y -= creditsContent[1].rect.height;
+			creditsContent[4] = CreatePanel(rect, "Designed by GGBotNet", 10, 10, 10, 10, 40, BLACK, BOARD);
+			rect.y -= creditsContent[2].rect.height * 2;
 			
-			creditsContent[3] = CreatePanel(rect, "SPECIAL MENTIONS", 10, 10, 10, 10, 60, BLACK, RED);
+			creditsContent[5] = CreatePanel(rect, "SPECIAL MENTIONS", 10, 10, 10, 10, 60, BLACK, RED);
 			rect.y -= creditsContent[3].rect.height;
-			creditsContent[4] = CreatePanel(rect, "Sergio Baretto", 10, 10, 10, 10, 40, BLACK, BOARD);
+			creditsContent[6] = CreatePanel(rect, "Sergio Baretto", 10, 10, 10, 10, 40, BLACK, BOARD);
 			rect.y -= creditsContent[4].rect.height;
-			creditsContent[5] = CreatePanel(rect, "Stefano Cvitanich", 10, 10, 10, 10, 40, BLACK, BOARD);
+			creditsContent[7] = CreatePanel(rect, "Stefano Cvitanich", 10, 10, 10, 10, 40, BLACK, BOARD);
 
 			text.color = GRAY_TRANSPARENT;
 			text.text = "Press ESC to return";
 			text.position.x = 50;
 			text.position.y = 50;
-			text.fontSize = 20;
+			text.fontSize = 10;
 		}
 
 		void Input()
@@ -80,7 +85,9 @@ namespace game
 				DrawPanel(creditsContent[i]);
 			}
 
+			slSetFont(1, 0);
 			DrawText(text);
+			slSetFont(0, 0);
 		}
 	}
 }

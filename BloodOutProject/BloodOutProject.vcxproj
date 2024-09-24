@@ -137,7 +137,8 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)libs\sigil-vc2015\*.dll" "$(OutDir)" /y
-xcopy "$(SolutionDir)res" "$(OutDir)" /y</Command>
+
+xcopy "$(SolutionDir)res" "$(OutDir)res" /i /y /s</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Dopy DLLs....</Message>
@@ -164,7 +165,8 @@ xcopy "$(SolutionDir)res" "$(OutDir)" /y</Command>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)libs\sigil-vc2015\*.dll" "$(OutDir)" /y
-xcopy "$(SolutionDir)res" "$(OutDir)" /y</Command>
+
+xcopy "$(SolutionDir)res" "$(OutDir)res" /i /y /s</Command>
       <Message>Dopy DLLs....</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
